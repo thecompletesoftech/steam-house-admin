@@ -201,7 +201,7 @@
                                 </span>
                                 <!--end::Svg Icon-->
                             </span>
-                            <span class="menu-title">Employee</span>
+                            <span class="menu-title">Engineer</span>
                         </a>
                     </div>
                     <div class="menu-item">
@@ -217,19 +217,7 @@
                             <span class="menu-title">Company List</span>
                         </a>
                     </div>
-                    {{-- <div class="menu-item">
-                        <a class="menu-link {{ checkActiveSideBar(['steamhouse']) ? 'menu-item active' : '' }}"
-                            href="{{ route('admin.steamhouses.index') }}">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                <i class="fa fa-home" style="color:white;font-size:15px;"></i>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </span>
-                            <span class="menu-title">Home</span>
-                        </a>
-                    </div> --}}
+
                     <div class="menu-item">
                         <a class="menu-link {{ checkActiveSideBar(['location']) ? 'menu-item active' : '' }}"
                             href="{{ route('admin.locations.index') }}">
@@ -240,7 +228,7 @@
                                 </span>
                                 <!--end::Svg Icon-->
                             </span>
-                            <span class="menu-title">Map Location</span>
+                            <span class="menu-title">Add Location</span>
                         </a>
                     </div>
 
@@ -258,58 +246,6 @@
                     </a>
                 </div>
 
-               {{-- <div class="menu-item">
-                        <a class="menu-link {{ checkActiveSideBar(['customertracking']) ? 'menu-item active' : '' }}"
-                            href="{{ route('admin.customertrackings.index') }}">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                    <i class="fa fa-map" style="color:white;font-size:15px;"></i>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </span>
-                            <span class="menu-title">Customer Tracking</span>
-                        </a>
-                    </div> --}}
-                   {{-- <div class="menu-item">
-                        <a class="menu-link {{ checkActiveSideBar(['review']) ? 'menu-item active' : '' }}"
-                            href="{{ route('admin.reviews.index') }}">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                    <i class="fa fa-star" style="color:white;font-size:15px;"></i>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </span>
-                            <span class="menu-title">Customer Feedback</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link {{ checkActiveSideBar(['managerfeedback']) ? 'menu-item active' : '' }}"
-                            href="{{ route('admin.managerfeedbacks.index') }}">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                <i class="fa fa-star" style="color:white;font-size:15px;"></i>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </span>
-                            <span class="menu-title">Manager Feedback</span>
-                        </a>
-                    </div> --}}
-                    {{-- <div class="menu-item">
-                        <a class="menu-link {{ checkActiveSideBar(['employeefeedback']) ? 'menu-item active' : '' }}"
-                            href="{{ route('admin.employeefeedbacks.index') }}">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                <i class="fa fa-male" style="color:white;font-size:15px;"></i>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </span>
-                            <span class="menu-title">Employee</span>
-                        </a>
-                    </div> --}}
                     <div class="menu-item">
                         <a class="menu-link {{ checkActiveSideBar(['customerdata']) ? 'menu-item active' : '' }}"
                             href="{{ route('admin.customerdatas.index') }}">

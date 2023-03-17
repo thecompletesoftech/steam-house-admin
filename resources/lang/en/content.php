@@ -261,13 +261,16 @@ return [
     'meter_id' => 'Meter Id',
     'meter' => 'Meter',
     'manager_id' => 'Manager',
-    'username' => 'User Name',
+    'username' => 'Company Username',
     'assign_manager' => 'Manager Name',
     'name' => 'Name',
+    'c_name' => 'Company Name',
+    'registration_address' => 'Company Address',
+
     'email' => 'Email',
     'phone' => 'Phone',
     'image' => 'Image',
-    'images' => 'Employee Image',
+    'images' => 'Engineer Image',
     'imagess' => 'Company Image',
     'latitude' => 'latitude',
     'longitude' => 'longitude',
@@ -286,9 +289,9 @@ return [
     'registration_confirm_password' => 'confirm password',
 
 
-    'Registration_name' => 'Manager Name',
-    'employee_reg' => 'Employee Name',
-    'Company_name' => 'Company Name',
+    'Registration_name' => 'Manager',
+    'employee_reg' => 'Engineer',
+    'Company_name' => 'Company',
 
 
 
@@ -340,16 +343,16 @@ return [
      // Employee
 
      'emo_name' => 'Name',
-     'emo_expert' => 'Employee Expert',
+     'emo_expert' => 'Engineer Expert',
      'emo_contact' => 'Contact',
-     'emp_img' => 'Employee Image',
+     'emp_img' => 'Engineer Image',
 
-     'emo_names' => 'employee name',
+     'emo_names' => 'Engineer name',
      'emo_experts' => 'expert',
      'emo_contacts' => 'contact number',
 
 
-     'employee' => 'Employee',
+     'employee' => 'Engineer',
      // review
      // manager feedback
 
@@ -361,9 +364,10 @@ return [
 
 
     // Company list & Location
-     'company_name' => 'Company Name',
-     'location' => 'Address',
+     'company_name' => 'Company',
+     'location' => 'Location',
      'company_list' => 'Company List',
+     'company_username' => 'Company Username',
 
 
 

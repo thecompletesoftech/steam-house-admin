@@ -26,14 +26,14 @@ class EmployeesRequest extends FormRequest
 
         if (!request()->is('admin/users/create')) {
             return [
-                //  'meter_id' => 'required|unique:users,meter_id',
+                 'meter_id' => 'required|unique:users,meter_id',
                 'username' => 'required|max:150|unique:users,username',
                 'name' => 'required|max:150',
                 'email' => 'required|email|unique:users,email',
-                'phone' => 'required|unique:users,phone',
-                'about' => 'required',
+                'phone' => 'required|number|max:10|unique:users,phone',
+
                 'password' => 'required',
-                'c_password' => 'required',
+                'c_password' => 'required_with:password|same:password',
                 'role' => 'required',
 
 
@@ -46,10 +46,10 @@ class EmployeesRequest extends FormRequest
                 'username' => 'unique:users,username',
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
-                'phone' => 'required|unique:users,phone',
-                'about' => 'required',
+                'phone' => 'required|number|max:10|unique:users,phone',
+
                 'password' => 'required',
-                'c_password' => 'required',
+                'c_password' => 'required_with:password|same:password',
                 'role' => 'required',
             ];
         }
@@ -69,7 +69,7 @@ class EmployeesRequest extends FormRequest
             'phone.phone' => __('validation.phone', ['attribute' => 'Phone']),
             'phone.unique' => __('validation.unique', ['attribute' => 'Phone']),
             'meter_id.required' => __('validation.required', ['attribute' => 'Manager Id']),
-            'about.required' => __('validation.required', ['attribute' => 'About']),
+
             'phone.required' => __('validation.required', ['attribute' => 'phone']),
             'password.required' => __('validation.required', ['attribute' => 'password']),
             'c_password.required' => __('validation.required', ['attribute' => 'confirm password']),

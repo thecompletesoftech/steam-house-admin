@@ -10,14 +10,16 @@
     <tr>
         <th>ID No.</th>
         <th>Manager</th>
-        <th>Username</th>
+
         <th>Name</th>
         <th>Email</th>
+
         <th>Emp. Photo</th>
+        <th>Username</th>
         <th>Phone</th>
         <th>Location</th>
         <th>About</th>
-        <th>Role</th>
+
         <th>ACTION</th>
       </tr>
 
@@ -26,34 +28,35 @@
       <tr>
 
         <td>{{$user->id }}</td>
-        <td>{{getNameById($user->manager_id)}}</td>
-        <td>{{$user->username}}</td>
+        <td>
+            @if(!empty($user->manager_id))
+            {{getNameById($user->manager_id)}}
+            @endif
+        </td>
+
         <td>{{$user->name}}</td>
         <td>{{$user->email}}</td>
-        <td><img src="{{ url('/') }}/employeeregistrations/image/{{$user->image}}" style="width:50px; height:50px;" /></td>
+
+        <td>
+            @if(!empty($user->image))
+            <img src="{{ url('/') }}/uploads/{{$user->image}}" style="width:50px; height:50px;border-radius: 25px;" />
+                @else
+                <img src="{{ asset('blank_user.PNG') }}" style="width:50px; height:50px;border-radius: 25px;" />
+            @endif
+        </td>
+        <td>{{$user->username}}</td>
         <td>{{$user->phone}}</td>
-        <td>{{$user->address}}</td>
+        <td>{{$user->location}}</td>
         <td>{{$user->about}}</td>
-    <td>
-        <span class="svg-icon svg-icon-3">
 
-             <?php if($user->role==1){?>
 
-                <span>Manager</span>
-             <?php  } ?>
-             <?php if($user->role==2){?>
-
-                <span>Engineer</span>
-             <?php  } ?>
-                      </span>
-                    </a> </td>
     <td>
         <a href="{{ url('/') }}/admin/employeeregistrations/{{$user->id}}/edit" title="Edit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
                     <span class="svg-icon svg-icon-3">
                         <i class="fa fa-pen"></i>
                     </span>
         </a>
-        <a href="{{ url('/') }}/admin/employeeregistrations/destroy/{{$user->id}}" title="Delete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
+        <a  onclick="return confirm('Are you sure you want to delete Enginner Data ?')"  href="{{ url('/') }}/admin/employeeregistrations/destroy/{{$user->id}}" title="Delete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
                     <span class="svg-icon svg-icon-3">
                         <i class="fa fa-trash"></i>
                     </span>

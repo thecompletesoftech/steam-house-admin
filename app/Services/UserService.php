@@ -241,10 +241,9 @@ class UserService
 
 
     public static function delete_user($id){
-        $result=DB::table('users')->where('id',auth()->user()->id)->delete();
-        $result1=DB::table('travel')->where('user_id',auth()->user()->id)->delete();
-        $result2=DB::table('ratings')->where('user_id',auth()->user()->id)->delete();
-        return $result.$result1.$result2;
+        $result=DB::table('users')->where('id',$id)->delete();
+        $result1=DB::table('service_request')->where('emp_id',$id)->delete();
+        return $result.$result1;
     }
 
 
@@ -290,4 +289,5 @@ class UserService
         $result = $user->delete();
         return $result;
     }
+
 }

@@ -5,61 +5,79 @@
 
     <div class="row mb-6">
 
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.emp_id', 1) }}</label>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.user_id', 1) }}</label>
+        <div class="col-lg-4 fv-row">
+                {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
+                <select class="form-control form-control-solid" name="user_id">
+                    @foreach($company as $data)
+                    <option value="{{$data->id}}">{{$data->name}}</option>
+                    @endforeach
+                </select>
+            </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manager_id', 1) }}</label>
+            <div class="col-lg-4 fv-row">
+                    {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
+                    <select class="form-control form-control-solid" name="manger_id">
+                        @foreach($manager as $data)
+                        <option value="{{$data->id}}">{{$data->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+        {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manger_id', 1) }}</label>
+        <div class="col-lg-4 fv-row">
+                {!! Form::text('manger_id', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.manger_id', 1)]) !!}
+        </div> --}}
+    </div>
+    <div class="row mb-6">
+        {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.emp_id', 1) }}</label>
+            <div class="col-lg-4 fv-row">
+                    <select class="form-control form-control-solid" name="emp_id">
+                        <option >--Select Employee--</option>
+                        @foreach($employee as $data)
+                        <option value="{{$data->id}}">{{$data->name}}</option>
+                        @endforeach
+                    </select>
+                </div> --}}
+
+        {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.emp_id', 1) }}</label>
         <div class="col-lg-4 fv-row">
                 {!! Form::text('emp_id', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.emp_id', 1)]) !!}
-        </div>
-    </div>
-
-    <div class="row mb-6">
-
+        </div> --}}
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.Service_request', 1) }}</label>
         <div class="col-lg-4 fv-row">
                 {!! Form::text('Service_request', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.Service_request', 1)]) !!}
         </div>
-
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.pictures', 1) }}</label>
         <div class="col-lg-4 fv-row">
-                {!! Form::file('pictures', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.pictures', 1)]) !!}
+            <input type="file" name="pictures" class="form-control form-control-lg form-control-solid">
+            @if($servicerequest->pictures)
+            <img src="{{ url('/') }}/uploads/{{$servicerequest->pictures}}" style="width:50px; height:50px;" />
+            @else
+            <input type="file" name="pictures" class="form-control form-control-lg form-control-solid">
+            @endif
         </div>
     </div>
 
     <div class="row mb-6">
 
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.number', 1) }}</label>
+
+
+
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.phone', 1) }}</label>
 
         <div class="col-lg-4 fv-row">
-                {!! Form::text('number', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.number', 1)]) !!}
+                {!! Form::text('phone', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.phone', 1)]) !!}
         </div>
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.discription', 1) }}</label>
 
         <div class="col-lg-4 fv-row">
                 {!! Form::text('discription', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.discriptions', 1)]) !!}
         </div>
-
     </div>
 
-    <div class="row mb-6">
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manager_review_id', 1) }}</label>
-        <div class="col-lg-4 fv-row">
-                {!! Form::text('manager_review_id', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.manager_review_id', 1)]) !!}
-        </div>
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.customer_review_id', 1) }}</label>
-        <div class="col-lg-4 fv-row">
-                {!! Form::text('customer_review_id', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.customer_review_ids', 1)]) !!}
-        </div>
-    </div>
-
-    <div class="row mb-6">
-
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.status', 1) }}</label>
-
-        <div class="col-lg-4 fv-row">
-                {!! Form::text('status', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.status', 1)]) !!}
-        </div>
 
 
-    </div>
+
 
 
 

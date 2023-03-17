@@ -460,9 +460,9 @@ public function UserList()
 
 // Employee
     //list
-    public function employeeslistapi()
+    public function employeeslistapi(Request $request)
     {
-        return $this->apiAuthService->employeeslistapi();
+        return $this->apiAuthService->employeeslistapi($request);
     }
     //add
     public function employeesapi(EmployeesRequest $request)

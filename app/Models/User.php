@@ -36,11 +36,12 @@ class User extends Authenticatable implements JWTSubject
         'image',
         'emo_expert',
         'password',
-        'c_password',
+        // 'c_password',
         'about',
         'fcm_token',
         'status',
         'role',
+        'c_address',
 
     ];
 
@@ -67,14 +68,14 @@ class User extends Authenticatable implements JWTSubject
     //     'email_verified_at' => 'datetime',
     // ];
 
-    public static function getImageAttribute($value)
-    {
-        if ($value) {
-            return FileService::getFileUrl('files/users/', $value, 'user');
-        } else {
-            return url('/') . '/blank_user.png';
-        }
-    }
+    // public static function getImageAttribute($value)
+    // {
+    //     if ($value) {
+    //         return FileService::getFileUrl('files/users/', $value, 'user');
+    //     } else {
+    //         return url('/') . '/blank_user.png';
+    //     }
+    // }
 
     // Rest omitted for brevity
 

@@ -15,6 +15,8 @@ use App\Services\UtilityService;
 // use App\Services\UserIntrestService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+
 
 
 
@@ -74,7 +76,7 @@ class ManagerRegistrationController extends Controller
     }
 
 
-    public function create()
+    public function create(Request $request)
     {
 
         // $manager=user::where('role','1')->get();
@@ -89,15 +91,18 @@ class ManagerRegistrationController extends Controller
 
         $input = $request->except(['_token', 'proengsoft_jsvalidation']);
 
-        $image=$request->file('image');
-        $filename = time().$image->getClientOriginalName();
-        $destinationPath = public_path('/managerregistrations/image/');
-        $image->move($destinationPath, $filename);
-        $input['image']=$filename;
+        if(!empty($input['image'])){
+            $manager_image=$request->file('image');
+            $picture=FileService::fileUploaderWithoutRequest($manager_image,'managerregistrations/image/');
+            $input['image']= $picture;
 
+        }
+        $haspassword=Hash::make($request->password);
+                        $input['password']=$haspassword;
         $battle = $this->user->create($input);
         return redirect()->route($this->index_route_name)->with('success',
-        $this->mls->messageLanguage('created', 'User add', 1));
+        $this->mls->messageLanguage('created', 'manager', 1));
+
     }
 
 
@@ -111,10 +116,17 @@ class ManagerRegistrationController extends Controller
     {
 
 
-        $user =User::where('id',$id)->first();
-        $manager=User::where('role','1')->get();
+
+        $manager=User::where('role','1')->where('id',$id)->first();
+
+       $image=$manager->image;
+
         $location = DB::table('location')->get();
-        return view($this->edit_view,compact('manager','user','location'));
+
+
+
+
+        return view($this->edit_view,compact('manager','image','location'));
     }
 
 
@@ -122,16 +134,22 @@ class ManagerRegistrationController extends Controller
     {
 
         $input = $request->except(['_method', '_token', 'proengsoft_jsvalidation']);
-        $image=$request->file('image');
-        $filename = time().$image->getClientOriginalName();
-        $destinationPath = public_path('/managerregistrations/image/');
-        $image->move($destinationPath, $filename);
-        $input['image']=$filename;
 
-        $data=DB::table('users')->where('id',$input['id'])->update($input);
+        if(!empty($input['image']))
+            {
+                $manager_image=$request->file('image');
+                $picture=FileService::fileUploaderWithoutRequest($manager_image,'managerregistrations/image/');
+                $input['image']= $picture;
+        }
+        if(!empty($input['password']))
+        {
 
-        return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'User update', 1));
-        // return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'User update', 1));
+    $input['password']=Hash::make($request->password);
+    }
+
+        $this->user->update($input,$user);
+        return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'manager', 1));
+
     }
 
     public function destroy($id)
@@ -139,23 +157,8 @@ class ManagerRegistrationController extends Controller
 
         $result=DB::table('users')->where('id', $id)->delete();
 
-        return redirect()->back()->withSuccess('Location Delete Successfully!');
+        return redirect()->back()->withSuccess('Data Delete Successfully!');
 
-        if ($result) {
-            return response()->json([
-                'status' => 1,
-                'title' => $this->mls->onlyNameLanguage('deleted_title'),
-                'message' => $this->mls->onlyNameLanguage('Location delete'),
-                'status_name' => 'success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'title' => $this->mls->onlyNameLanguage('deleted_title'),
-                'message' => $this->mls->onlyNameLanguage('Location delete'),
-                'status_name' => 'error'
-            ]);
-        }
 
     }
 

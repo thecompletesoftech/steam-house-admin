@@ -27,14 +27,14 @@ class ManagerEditRequest extends FormRequest
         if (!request()->is('admin/users/create')) {
             return [
                 //  'meter_id' => 'required|unique:users,meter_id',
-                // 'username' => 'required|max:150|unique:users,username',
-                'name' => 'required|max:150',
+                // 'username' => 'required|unique:users,username',
+                // 'name' => 'required|max:150',
                 // 'email' => 'required|email|unique:users,email',
-                // 'phone' => 'required|unique:users,phone',
-                'about' => 'required',
-                'password' => 'required',
-                'c_password' => 'required',
-                'role' => 'required',
+                // 'phone' => 'max:10|starts_with:1,2,3,4,5,6,7,8,9',
+                // 'about' => 'required',
+                // 'password' => 'required',    
+                'c_password' => 'same:password',
+                // 'role' => 'required',
 
 
 
@@ -44,13 +44,13 @@ class ManagerEditRequest extends FormRequest
             return [
                 //  'meter_id' => 'required|unique:users,meter_id',
                 // 'username' => 'unique:users,username',
-                'name' => 'required',
+                // 'name' => 'required',
                 // 'email' => 'required|email|unique:users,email',
-                // 'phone' => 'required|unique:users,phone',
-                'about' => 'required',
-                'password' => 'required',
-                'c_password' => 'required',
-                'role' => 'required',
+                // 'phone' => 'max:10|starts_with:1,2,3,4,5,6,7,8,9',
+                // 'about' => 'required',
+                // 'password' => 'required',
+                'c_password' => 'same:password',
+                // 'role' => 'required',
             ];
         }
     }
@@ -60,16 +60,17 @@ class ManagerEditRequest extends FormRequest
         return [
             // 'meater_id.required' => __('validation.required', ['attribute' => 'Manager Id']),
             'name.required' => __('validation.required', ['attribute' => 'Name']),
-            // 'email.required' => __('validation.required', ['attribute' => 'Email']),
-            // 'email.email' => __('validation.email', ['attribute' => 'Email']),
-            // 'email.unique' => __('validation.unique', ['attribute' => 'Email']),
-            // 'username.required' => __('validation.required', ['attribute' => 'Username']),
-            // 'username.unique' => __('validation.unique', ['attribute' => 'Username']),
-            // 'phone.required' => __('validation.required', ['attribute' => 'Phone']),
-            // 'phone.phone' => __('validation.phone', ['attribute' => 'Phone']),
-            // 'phone.unique' => __('validation.unique', ['attribute' => 'Phone']),
-            // 'meter_id.required' => __('validation.required', ['attribute' => 'Manager Id']),
+            'email.required' => __('validation.required', ['attribute' => 'Email']),
+            'email.email' => __('validation.email', ['attribute' => 'Email']),
+            'email.unique' => __('validation.unique', ['attribute' => 'Email']),
+            'username.required' => __('validation.required', ['attribute' => 'Username']),
+            'username.unique' => __('validation.unique', ['attribute' => 'Username']),
+            'phone.required' => __('validation.required', ['attribute' => 'Phone']),
+            'phone.phone' => __('validation.phone', ['attribute' => 'Phone']),
+            'phone.unique' => __('validation.unique', ['attribute' => 'Phone']),
+            'meter_id.required' => __('validation.required', ['attribute' => 'Manager Id']),
             'about.required' => __('validation.required', ['attribute' => 'About']),
+            'phone.required' => __('validation.required', ['attribute' => 'phone']),
             'password.required' => __('validation.required', ['attribute' => 'password']),
             'c_password.required' => __('validation.required', ['attribute' => 'confirm password']),
             'role.required' => __('validation.required', ['attribute' => 'role']),

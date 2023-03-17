@@ -10,14 +10,15 @@
   <tr>
     <th>ID No.</th>
     <th>Meter ID.</th>
-    <th>Manager</th>
-    <th>Username</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Phone</th>
-    <th>Image</th>
-    <th>address</th>
-    <th>About</th>
+
+
+    <th>NAME</th>
+    <th>EMAIl</th>
+    <th>PHONE</th>
+    <th>USERNAME</th>
+    <th>IMAGE</th>
+    <th>ADDRESS</th>
+    <th>ABOUT</th>
     <th>ACTION</th>
   </tr>
 
@@ -27,15 +28,22 @@
 
     <td>{{$user->id }}</td>
     <td>{{$user->meter_id}}</td>
-    <td>{{getNameById($user->manager_id)}}</td>
-    <td>{{$user->username}}</td>
+
+
     <td>{{$user->name}}</td>
     <td>{{$user->email}}</td>
     <td>{{$user->phone}}</td>
-    <td><img src="{{ url('/') }}/companylists/image/{{$user->image}}" style="width:50px; height:50px;" /></td>
+    <td>{{$user->username}}</td>
+    <td>
+        @if(!empty($user->image))
+        <img src="{{ url('/') }}/uploads/{{$user->image}}" style="width:50px; height:50px;border-radius: 25px;" />
+        @else
+        <img src="{{ asset('blank_user.PNG') }}" style="width:50px; height:50px;border-radius: 25px;" />
+        @endif
+    </td>
     {{-- <td>{{$user->address}}</td> --}}
     {{-- <td>{{$user->longitude}}</td> --}}
-    <td>{{$user->address}}</td>
+    <td>{{$user->c_address}}</td>
     <td>{{$user->about}}</td>
     <td>
         <a href="{{ url('/') }}/admin/companylists/{{$user->id}}/edit" title="Edit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
@@ -43,7 +51,7 @@
                         <i class="fa fa-pen"></i>
                     </span>
         </a>
-        <a href="{{ url('/') }}/admin/companylists/destroy/{{$user->id}}" title="Delete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
+        <a onclick="return confirm('Are you sure you want to delete ?')"  href="{{ url('/') }}/admin/companylists/destroy/{{$user->id}}" title="Delete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
                     <span class="svg-icon svg-icon-3">
                         <i class="fa fa-trash"></i>
                     </span>

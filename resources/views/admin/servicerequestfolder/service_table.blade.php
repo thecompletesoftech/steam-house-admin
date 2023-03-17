@@ -20,14 +20,22 @@
   @foreach($servicerequest as $user)
   <tr>
     <td>{{$user->id }}</td>
-    <td>{{getNameById($user->emp_id)}}</td>
+
+    <td>
+        @if(!empty($user->emp_id))
+        {{getNameById($user->emp_id)}}
+        @endif
+    </td>
+
     <td>{{$user->managername}}</td>
     <td>{{$user->Service_request}}</td>
-    {{-- <td>{{$user->pictures}}</td> --}}
     <td>
-        @foreach(json_decode($user->pictures,true) as $image)
-        <img src="{{ url('/') }}/uploads/servicerequests/image/{{$image}}" height="50" weight="50">
-        @endforeach
+        @if(!empty($user->pictures))
+
+        <img src="{{ url('/') }}/uploads/{{$user->pictures}}" style="width:50px; height:50px;border-radius: 25px;">
+        @else
+        <img src="{{ asset('blank_user.PNG') }}" style="width:50px; height:50px;border-radius: 25px;" />
+        @endif
     </td>
     <td>{{$user->phone}}</td>
     <td>{{$user->discription}}</td>
@@ -36,12 +44,12 @@
 
 
     <td>
-        {{-- <a href="{{ url('/') }}/admin/servicerequests/{{$user->id}}/edit" title="Edit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
+        <a href="{{ url('/') }}/admin/servicerequests/{{$user->id}}/edit" title="Edit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
                     <span class="svg-icon svg-icon-3">
                         <i class="fa fa-pen"></i>
                     </span>
-        </a> --}}
-        <a href="{{ url('/') }}/admin/servicerequests/destroy/{{$user->id}}" title="Delete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
+        </a>
+        <a onclick="return confirm('Are you sure you want to delete ?')"  href="{{ url('/') }}/admin/servicerequests/destroy/{{$user->id}}" title="Delete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
                     <span class="svg-icon svg-icon-3">
                         <i class="fa fa-trash"></i>
                     </span>

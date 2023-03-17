@@ -378,7 +378,7 @@ class AuthService
 
                 }
                 $input1['otp']= $otp;
-                        $data = DB::table('service_request')->where('id',$user->id)->update($input1);
+                        $data = DB::table('service_request')->where('id',$request->service_request_id)->update($input1);
                 // $data = DB::table('customertrack')->where('Service_request_id',$request->Service_request_id)->update($input1);
 
             return response()->json(
@@ -425,21 +425,34 @@ public static function verifyOtp(Request $request)
             if ($data) {
 
 
-                $track =
+                $old_track =
                 [
-                'Service_request_id' =>$request->service_request_id,
-                'text' => "Engineer Check-In",
+                'status'=>"2",
                 ];
+                $trackingold = TrackingModel::where('Service_request_id',$request->service_request_id)->where('text','Engineer Check-In')->update($old_track);
+
                 $track =
                 [
                 'Service_request_id' =>$request->service_request_id,
                 'text' => "Service in process",
+                'status'=>1,
                 ];
-                    $service_request=TrackingModel::where('text',$track['text'])->get();
-                    if(count($service_request)>0){
-                    }else{
-                        $tracking = TrackingModel::create($track);
-                    }
+                $tracking = TrackingModel::create($track);
+
+
+
+                $resolved =
+                [
+                'Service_request_id' =>$request->service_request_id,
+                'text' => "Resolved By Engineer",
+                'status'=>1,
+                ];
+                $trackingday = TrackingModel::create($resolved);
+                    // $service_request=TrackingModel::where('text',$track['text'])->get();
+                    // if(count($service_request)>0){
+                    // }else{
+                    //     $tracking = TrackingModel::create($track);
+                    // }
                 $input=[];
                 $input =
                 [
@@ -950,7 +963,6 @@ public static function verifyOtp(Request $request)
                 'emp_id' => $request->emp_id,
                 'manger_id' => $request->manger_id,
                 'Service_request' => $request->Service_request,
-                'pictures' => $request->pictures,
                 'phone' => $request->phone,
                 'discription' => $request->discription,
                 'latitude' => $request->latitude,
@@ -965,17 +977,24 @@ public static function verifyOtp(Request $request)
                 //     $complain =EmployeeModel::where('emp_id',$request->EmpId)->get();
 
                 //   }
-                if(!empty($input['pictures'])){
-                    $pictures=FileService::multipleImageUploader($request,'pictures','servicerequests/image/');
-                    $input['pictures']= json_encode($pictures);
+                if(!empty($request->pictures)){
+                    $picture=FileService::multipleImageUploader($request,'pictures','servicerequests/image/');
+                    $input['pictures']= json_encode($picture);
 
                   }
+
+
                 $servicerequest = ServiceRequestModel::create($input);
+
+                $userss = DB::table('users')->where('id',$servicerequest->user_id)->select('name','address','phone')->first();
+                $location=DB::table('users')->select('location.location')->join('location','location.location_id','=','users.address')->where('users.id',$servicerequest->user_id)->first();
 
                 $track =
                 [
                 'Service_request_id' => $servicerequest->id,
-                'text' => "Ticket Generated",
+                'text' => "Ticket Generated,"."$userss->name,"."$location->location,"."$userss->phone,",
+                'status'=>"2",
+                'created_at'=>date('Y-m-d H:i:s'),
 
                 ];
                 $tracking = TrackingModel::create($track);
@@ -983,7 +1002,8 @@ public static function verifyOtp(Request $request)
                 [
                 'Service_request_id' => $servicerequest->id,
                 'text' => "Pending For Assignment",
-
+                'status'=>"1",
+                'created_at'=>date('Y-m-d H:i:s'),
                 ];
                 $tracking = TrackingModel::create($track);
 
@@ -1075,9 +1095,8 @@ public static function verifyOtp(Request $request)
 
 
             foreach($status as $data){
-
                 // $data->otp= DB::table('master_otps')->select('otp')->where('service_request_id',$data->id)->orderBy('service_request_id', 'desc')->first();
-                $data->employee = DB::table('users')->select('id','name','emo_expert','image','phone')->where('id',$data->emp_id)->where('role','2')->get();
+                $data->employee = DB::table('users')->select('id','name','emo_expert','image','phone','latitude','longitude','address')->where('id',$data->emp_id)->where('role','2')->get();
                 $data->user = DB::table('users')->select('id','meter_id','name','address','phone')->where('id',$request->UserId)->get();
                 $data->managerfeedback = DB::table('managerfeedback')->where('manager_feedback_id',$data->manger_id)->where('Service_request_id',$data->id)->get();
                 $data->employeefeedback = DB::table('employee_feedback')->where('employee_id',$data->emp_id)->where('Service_request_id',$data->id)->get();
@@ -1108,57 +1127,63 @@ public static function verifyOtp(Request $request)
         }
         // list by ManagerID
         public static function ServiceRequestBYManagerID(Request $request){
-            $status=ServiceRequestModel::where('manger_id',$request->ManagerID)->orderBy('created_at', 'asc')->get();
-
-            foreach($status as $data)
-            {
+            $status=ServiceRequestModel::where('manger_id',$request->ManagerID)->orderBy('id', 'DESC')->get();
+             foreach($status as $data)
+             {
 
                 $data->employee = DB::table('users')->select('id','name','emo_expert','image','phone')->where('id',$data->emp_id)->where('role','2')->get();
-                // $data->user = DB::table('users')->select('id','meter_id','name','address')->where('id',$request->ManagerID)->get();
-                $data->user = DB::table('users')->select('id','meter_id','name','address','phone')->where('manager_id',$request->ManagerID)->get();
-                // $data->managerfeedback = DB::table('managerfeedback')->where('manager_feedback_id',$data->id)->get();
-                // $data->customerfeedback = DB::table('customerfeedback')->where('customer_feedback_id',$data->user_id)->get();
-                // $data->employeefeedback = DB::table('employee_feedback')->where('employee_id',$data->emp_id)->get();
-                $data->managerfeedback = DB::table('managerfeedback')->where('manager_feedback_id',$data->manger_id)->where('Service_request_id',$status[0]['id'])->get();
-                $data->customerfeedback = DB::table('customerfeedback')->where('customer_feedback_id',$data->user_id)->where('Service_request_id',$status[0]['id'])->get();
-                $data->employeefeedback = DB::table('employee_feedback')->where('employee_id',$data->emp_id)->where('Service_request_id',$status[0]['id'])->get();
-            }
-            // if (!empty($status))
-            if (count($status)>0)
-            {
-                return response()->json(
-                    [
-                        'status' => true,
-                        'message' => 'Data Find successfully',
-                        'data' => $status
-                    ],
-                    200
-                );
-            }
-            else {
-                return response()->json(
-                    [
-                        'status' => false,
-                        'message' => 'Data not Found',
-                        'data' =>[],
-                    ],
-                    200
-                );
-            }
-        }
+
+           $data->user = DB::table('users')->select('*')
+                 -> where('id',$data->user_id)
+                 ->where('role','0')
+                 ->get();
+
+                 $data->managerfeedback = DB::table('managerfeedback')->where('manager_feedback_id',$data->manger_id)->where('Service_request_id',$data->id)->get();
+                 $data->customerfeedback = DB::table('customerfeedback')->where('customer_feedback_id',$data->user_id)->where('Service_request_id',$data->id)->get();
+                 $data->employeefeedback = DB::table('employee_feedback')->where('employee_id',$data->emp_id)->where('Service_request_id',$data->id)->get();
+             }
+             // if (!empty($status))
+             if (count($status)>0)
+             {
+                 return response()->json(
+                     [
+                         'status' => true,
+                         'message' => 'Data Find successfully',
+                         'data' => $status
+                     ],
+                     200
+                 );
+             }
+             else {
+                 return response()->json(
+                     [
+                         'status' => false,
+                         'message' => 'Data not Found',
+                         'data' =>[],
+                     ],
+                     200
+                 );
+             }
+         }
         // list by EmpId
         public static function ServiceRequestBYEmpId(Request $request)
         {
 
             if($request->EmpId!='')
             {
-            $status =ServiceRequestModel::where('emp_id',$request->EmpId)->get();
+            $status =ServiceRequestModel::where('emp_id',$request->EmpId)->orderBy('id', 'DESC')->get();
+
             foreach($status as $data){
 
-                $data->managerfeedback = DB::table('managerfeedback')->where('manager_feedback_id',$data->manger_id)->where('Service_request_id',$status[0]['id'])->get();
-                $data->customerfeedback = DB::table('customerfeedback')->where('customer_feedback_id',$data->user_id)->where('Service_request_id',$status[0]['id'])->get();
-                $data->employeefeedback = DB::table('employee_feedback')->where('employee_id',$data->emp_id)->where('Service_request_id',$status[0]['id'])->get();
-                // $data->employee = DB::table('users')->where('id',$data->id)->get();
+                $data->managerfeedback = DB::table('managerfeedback')->where('manager_feedback_id',$data->manger_id)->where('Service_request_id',$data->id)->get();
+                $data->user = DB::table('users')->select('*')
+                 -> where('id',$data->user_id)
+                 ->where('role','0')
+                 ->get();
+
+
+                $data->customerfeedback = DB::table('customerfeedback')->where('customer_feedback_id',$data->user_id)->where('Service_request_id',$data->id)->get();
+                $data->employeefeedback = DB::table('employee_feedback')->where('Service_request_id',$data->id)->where('employee_id',$request->EmpId)->get();
 
 
             }
@@ -1192,6 +1217,20 @@ public static function verifyOtp(Request $request)
         public static function servicesrequeststatusupdate(Request $request,$id)
     {
 
+            $data=DB::table('service_request')->where('id',$id)->where('emp_id',$request->emp_id)->first();
+
+            if(!empty($data))
+                {
+                return response()->json(
+                    [
+                        'status' => true,
+                        'message' => 'Status Update Successfully',
+                        'data'=>$data
+                    ],
+                    200
+                );
+                    }
+
              $input=array();
             if(!empty($request->emp_id)){
                 $input['emp_id']=$request->emp_id;
@@ -1201,8 +1240,13 @@ public static function verifyOtp(Request $request)
             }
 
             $inputdata=DB::table('service_request')->where('id', $id)->update($input);
+
+            $emp = DB::table('users')->where('id',$request->emp_id)->select('name','phone')->first();
+
+            // $empdata=DB::table('service_request')->where('id', $id)->get();
+
             // $input=DB::table('customertrack')->where('Service_request_id', $request->user_id)->update(array('assign_engineer' => $emp_id));
-                // $input['emp_id']=$request->emp_id;
+            // $input['emp_id']=$request->emp_id;
 
 
                 // $servicerequest = ServiceRequestModel::create($input);
@@ -1210,10 +1254,28 @@ public static function verifyOtp(Request $request)
                 $track =
                 [
                 'Service_request_id' =>$id,
-                'text' => "Assign To Engineer",
-
+                'text' => "Assign To Engineer,"."$emp->name,"."$emp->phone",
+                'status'=>2,
                 ];
                 $tracking = TrackingModel::create($track);
+
+
+                $old_track =
+                [
+                'status'=>"2",
+                ];
+                $trackingold = TrackingModel::where('Service_request_id',$id)->where('text','Pending For Assignment')->update($old_track);
+
+                $track =
+                [
+                'Service_request_id' =>$id,
+                'text' => "Engineer Check-In",
+                'status'=>1,
+                ];
+                $tracking = TrackingModel::create($track);
+
+
+
 
             if ($inputdata) {
                 return response()->json(
@@ -1234,6 +1296,7 @@ public static function verifyOtp(Request $request)
                     200
                 );
             }
+
     }
     public static function servicesrequestupdate(Request $request,$id)
         {
@@ -1604,18 +1667,24 @@ public static function verifyOtp(Request $request)
                 'Service_request_id' => $request->Service_request_id,
                 'manager_feedback_id' => $request->manager_feedback_id,
                 'discription' => $request->discription,
-
-
                 ];
 
                 $managerfeedback = ManagerFeedbackModel::create($input);
 
-                $track =
+                $closedticket =
                 [
-                'Service_request_id' =>$request->Service_request_id,
-                'text' => "Service Request Closed",
-                ];
-                    $service_request=TrackingModel::where('text',$track['text'])->get();
+                'status' =>2,
+
+            ];
+                    $service_request=TrackingModel::where('Service_request_id',$request->Service_request_id)->where('text',"Service Request Closed")->update($closedticket);
+
+                    $service_status =
+                    [
+                    'status' =>4
+                    ];
+                    $feedback = ServiceRequestModel::where('id',$request->Service_request_id)->update($service_status);
+
+
                     if(count($service_request)>0){
                     }else{
                         $tracking = TrackingModel::create($track);
@@ -1732,20 +1801,48 @@ public static function verifyOtp(Request $request)
 
                 $employeefeedback = EmployeeFeedbackModel::create($input);
 
-                $track =
+                $service =
                 [
-                'Service_request_id' =>$request->Service_request_id,
-                'text' => "Resolve By Engineer",
+              'status'=>2
                 ];
 
-                    $service_request=TrackingModel::where('text',$track['text'])->get();
-
-                    if(count($service_request)>0){
+                    $service_request=TrackingModel::where('Service_request_id',$request->Service_request_id)->where('text',"Service in process")->update($service);
 
 
-                    }else{
-                        $tracking = TrackingModel::create($track);
-                    }
+                    $resolve =
+                    [
+                  'status'=>2
+                    ];
+
+                        $service_request=TrackingModel::where('Service_request_id',$request->Service_request_id)->where('text',"Resolved by Engineer")->update($resolve);
+
+
+                        $closed =
+                        [
+                        'Service_request_id'=>$request->Service_request_id,
+                        'text'=>"Service Request Closed",
+                        'status'=>1,
+                        ];
+
+                            $service_request=TrackingModel::create($closed);
+
+
+
+
+                    $service_status =
+                    [
+                    'status' =>3
+                    ];
+                    $feedback = ServiceRequestModel::where('id',$request->Service_request_id)->update($service_status);
+
+
+
+                    // if(count($service_request)>0){
+
+
+                    // }else{
+                    //     $tracking = TrackingModel::create($track);
+                    // }
 
                 if ($employeefeedback) {
                     return response()->json(
@@ -1808,11 +1905,13 @@ public static function verifyOtp(Request $request)
 
  //Employee
             //list
-            public static function employeeslistapi(){
+            public static function employeeslistapi(Request $request){
 
                 // $status = DB::table('users')->get();
-                $status = DB::select('select * from users where role = :role', ['role' => 2]);
+                // $status = DB::select('select * from users where role = :role', ['role' => 2]);
+                $data=DB::table('users')->where('id',auth()->user()->id)->first();
 
+                $status=DB::table('users')->where('manager_id',$data->id)->where('role',2)->get();
                 if (count($status)>0)
                 {
                     return response()->json(

@@ -53,7 +53,7 @@ Route::group(['middleware' => ['optimizeImages'], 'prefix' => '/v1/customer', 'n
 
          // Employee Data
          Route::post('employees', 'employeesapi');
-         Route::post('employeeslist', 'employeeslistapi');
+
          Route::post('employeeupdateapi/{id}', 'employeeupdateapi');
          // Live Data(customerdatas)
          Route::post('customerdatas', 'customerdatasapi');
@@ -85,6 +85,7 @@ Route::group(['middleware' => ['optimizeImages'], 'prefix' => '/v1/customer', 'n
             Route::post('placeById', 'placeById');
             Route::post('deleteAccount', 'deleteAccount');
             Route::post('logout', 'logout');
+             Route::post('employeeslist', 'employeeslistapi');
 
             //Service Request Api
              Route::post('servicerequestlist', 'servicerequestlistapi');

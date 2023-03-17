@@ -15,6 +15,7 @@ use App\Services\UtilityService;
 // use App\Services\UserIntrestService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 
 
@@ -76,10 +77,10 @@ class EmployeeRegistrationController extends Controller
 
     public function create()
     {
-        $user =User::where('id',$id)->first();
+        // $user =User::where('id',$id)->first();
         $manager=User::where('role','1')->get();
         $location = DB::table('location')->get();
-        return view($this->edit_view,compact('manager','user','location'));
+        return view($this->create_view,compact('manager','location'));
 
     }
 
@@ -87,14 +88,20 @@ class EmployeeRegistrationController extends Controller
     {
 
         $input = $request->except(['_token', 'proengsoft_jsvalidation']);
-        $image=$request->file('image');
-        $filename = time().$image->getClientOriginalName();
-        $destinationPath = public_path('/employeeregistrations/image/');
-        $image->move($destinationPath, $filename);
-        $input['image']=$filename;
-        $battle = $this->user->create($input);
-        return redirect()->route($this->index_route_name)->with('success',
-        $this->mls->messageLanguage('created', 'User add', 1));
+
+        if(!empty($input['image'])){
+            $manager_image=$request->file('image');
+            $picture=FileService::fileUploaderWithoutRequest($manager_image,'employees/image/');
+            $input['image']= $picture;
+        }
+
+        $haspassword=Hash::make($request->password);
+        $input['password']=$haspassword;
+            $battle = $this->user->create($input);
+            return redirect()->route($this->index_route_name)->with('success',
+            $this->mls->messageLanguage('created', 'engineer', 1));
+
+
     }
 
 
@@ -115,43 +122,33 @@ class EmployeeRegistrationController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(Request $request,User $user)
     {
         $input = $request->except(['_method', '_token', 'proengsoft_jsvalidation']);
+        if(!empty($input['image'])){
+            $manager_image=$request->file('image');
+            $picture=FileService::fileUploaderWithoutRequest($manager_image,'employees/image/');
+            $input['image']= $picture;
 
-        $image=$request->file('image');
-        $filename = time().$image->getClientOriginalName();
-        $destinationPath = public_path('/employeeregistrations/image/');
-        $image->move($destinationPath, $filename);
-        $input['image']=$filename;
+        }
+       if(!empty($input['password'])){
+            $haspassword=Hash::make($request->password);
+            $input['password']=$haspassword;
 
-        $this->user->update($input);
-        return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'User update', 1));
+        }
+
+        $this->user->update($input,$user);
+            return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'engineer', 1));
+
         // return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'User update', 1));
     }
 
     public function destroy($id)
     {
 
-        $result=DB::table('users')->where('id', $id)->delete();
+        $result=UserService::delete_user($id);
 
-        return redirect()->back()->withSuccess('Location Delete Successfully!');
-
-        if ($result) {
-            return response()->json([
-                'status' => 1,
-                'title' => $this->mls->onlyNameLanguage('deleted_title'),
-                'message' => $this->mls->onlyNameLanguage('Location delete'),
-                'status_name' => 'success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'title' => $this->mls->onlyNameLanguage('deleted_title'),
-                'message' => $this->mls->onlyNameLanguage('Location delete'),
-                'status_name' => 'error'
-            ]);
-        }
+        return redirect()->back()->withSuccess('Data Delete Successfully!');
 
     }
 

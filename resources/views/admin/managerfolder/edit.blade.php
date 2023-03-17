@@ -19,9 +19,9 @@
                         <!--begin::Content-->
                         <div class="flex-lg-row-fluid me-0 me-lg-20">
                             <!--begin::Form-->
-                            {!! Form::model($user, ['method' => 'PATCH', 'route' => ['admin.managerregistrations.update', $user->id], 'class' => 'form mb-15', 'enctype' => 'multipart/form-data']) !!}
+                            {!! Form::model($manager, ['method' => 'PATCH', 'route' => ['admin.managerregistrations.update', $manager->id], 'class' => 'form mb-15', 'enctype' => 'multipart/form-data']) !!}
                             @csrf
-                            <input type="hidden" name="id" value="{{$user->id}}">
+                            <input type="hidden" name="id" value="{{$manager->id}}">
                             @include('admin.managerfolder.editform')
                             <!--begin::Actions-->
                             <div class="card-footer d-flex justify-content-end py-6 px-9">

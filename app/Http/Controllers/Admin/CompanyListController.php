@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\Admin\ManagerRequest;
+use App\Http\Requests\Admin\CompanyEditRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Services\CompanyListService;
@@ -15,7 +16,7 @@ use App\Services\UtilityService;
 // use App\Services\UserIntrestService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Hash;
 
 
 class CompanyListController extends Controller
@@ -87,16 +88,19 @@ class CompanyListController extends Controller
     {
 
         $input = $request->except(['_token', 'proengsoft_jsvalidation']);
+        if(!empty($input['image'])){
+            $company_image=$request->file('image');
+            $picture=FileService::fileUploaderWithoutRequest($company_image,'company/image/');
+            $input['image']= $picture;
+        }
+        $haspassword=Hash::make($request->password);
+        $input['password']=$haspassword;
 
-        $image=$request->file('image');
-        $filename = time().$image->getClientOriginalName();
-        $destinationPath = public_path('/companylists/image/');
-        $image->move($destinationPath, $filename);
-        $input['image']=$filename;
+            $battle = $this->user->create($input);
+            return redirect()->route($this->index_route_name)->with('success',
+            $this->mls->messageLanguage('created', 'company', 1));
 
-        $battle = $this->user->create($input);
-        return redirect()->route($this->index_route_name)->with('success',
-        $this->mls->messageLanguage('created', 'User add', 1));
+
     }
 
 
@@ -119,13 +123,29 @@ class CompanyListController extends Controller
     }
 
 
-    public function update(Request $request,User $user)
+    public function update(CompanyEditRequest $request,User $user)
     {
 
-        $input = $request->except(['_method', '_token', 'proengsoft_jsvalidation']);
-        $data=DB::table('users')->where('id',$input['id'])->update($input);
 
-        return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'User update', 1));
+
+        $input = $request->except(['_method', '_token', 'proengsoft_jsvalidation']);
+        $id=$input['id'];
+        if(!empty($input['image'])){
+            $company_image=$request->file('image');
+            $picture=FileService::fileUploaderWithoutRequest($company_image,'company/image/');
+            $input['image']= $picture;
+        }
+
+        if(!empty($input['password']))
+        {
+            $input['password']=Hash::make($request->password);
+        }
+
+
+        $this->user->update($input,$user);
+        return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'company', 1));
+
+
         // return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'User update', 1));
     }
 
@@ -134,23 +154,8 @@ class CompanyListController extends Controller
 
         $result=DB::table('users')->where('id', $id)->delete();
 
-        return redirect()->back()->withSuccess('Location Delete Successfully!');
+        return redirect()->back()->withSuccess('Data Delete Successfully!');
 
-        if ($result) {
-            return response()->json([
-                'status' => 1,
-                'title' => $this->mls->onlyNameLanguage('deleted_title'),
-                'message' => $this->mls->onlyNameLanguage('Location delete'),
-                'status_name' => 'success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'title' => $this->mls->onlyNameLanguage('deleted_title'),
-                'message' => $this->mls->onlyNameLanguage('Location delete'),
-                'status_name' => 'error'
-            ]);
-        }
 
     }
 

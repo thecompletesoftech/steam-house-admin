@@ -1,59 +1,29 @@
 <div class="card-body">
 
+
+
     <div class="row mb-6">
 
-        <div class="row mb-6">
-            <div class="row mb-6">
-                <!--begin::Label-->
-                <label class="col-lg-4 col-form-label fw-bold fs-6">{{ trans_choice('content.image', 1) }}</label>
-                <!--end::Label-->
-                <!--begin::Col-->
-                <div class="col-lg-8">
-                    @php
-                        if (isset($user->image)) {
-                            $image = $user->image;
-                        } else {
-                            $image = url('/') . '/blank_user.png';
-                        }
-                    @endphp
-                    <!--begin::Image input-->
-                    <div class="image-input image-input-outline" data-kt-image-input="true"
-                        style="background-image: url(assets/media/avatars/blank.png)">
-                        <!--begin::Preview existing avatar-->
-                        <div class="image-input-wrapper w-125px h-125px" style="background-image: url('{{ $user->image }}')">
-                        </div>
-                        <!--end::Preview existing avatar-->
-                        <!--begin::Label-->
-                        <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow"
-                            data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
-                            <i class="bi bi-pencil-fill fs-7"></i>
-                            <!--begin::Inputs-->
-                            <input type="file" name="image" accept=".png, .jpg, .jpeg" />
-                            <!--end::Inputs-->
-                        </label>
-                        <!--end::Label-->
-                    </div>
-                    <!--end::Image input-->
-                    <!--begin::Hint-->
-                    <div class="form-text">Allowed file types: png, jpg, jpeg.</div>
-                    <!--end::Hint-->
-                </div>
-                <!--end::Col-->
-            </div>
-        </div>
-        {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.image', 1) }}</label>
-        <div class="col-lg-4 fv-row">
-            {!! Form::file('image', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.images', 1)]) !!}
-        </div> --}}
+
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manager', 1) }}</label>
                 <div class="col-lg-4 fv-row">
                         {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
                         <select class="form-control form-control-solid" name="manager_id">
+                            <option >--Select Manager--</option>
                             @foreach($manager as $data)
                             <option value="{{$data->id}}">{{$data->name}}</option>
                     @endforeach
                         </select>
-                    </div>
+                </div>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.address', 1) }}</label>
+                <div class="col-lg-4 fv-row">
+                        <select class="form-control form-control-solid" name="address">
+                            <option >--Select location--</option>
+                            @foreach($location as $data)
+                            <option value="{{$data->location_id}}">{{$data->location}}</option>
+                    @endforeach
+                        </select>
+                </div>
 
 
     </div>
@@ -75,7 +45,7 @@
 
          <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.phone', 1) }}</label>
         <div class="col-lg-4 fv-row">
-            {!! Form::text('phone', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.registration_number', 1)]) !!}
+            {!! Form::number('phone', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.registration_number', 1)]) !!}
         </div>
 
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.email', 1) }}</label>
@@ -97,7 +67,9 @@
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.password', 1) }}</label>
 
         <div class="col-lg-4 fv-row">
-            {!! Form::text('password', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.registration_password', 1)]) !!}
+            {{-- {!! Form::text('password', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.registration_password', 1)]) !!} --}}
+            <input min="2" max="6"  class="form-control form-control-lg form-control-solid is-valid" placeholder="password" name="password" type="text" aria-describedby="password-error" aria-invalid="false">
+
         </div>
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.c_password', 1) }}</label>
 
@@ -125,18 +97,27 @@
     </div>
 
     <div class="row mb-6">
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.address', 1) }}</label>
-                <div class="col-lg-4 fv-row">
-                        <select class="form-control form-control-solid" name="address">
-                            @foreach($location as $data)
-                            <option value="{{$data->location_id}}">{{$data->location}}</option>
-                    @endforeach
-                        </select>
-                    </div>
+
+
+
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.image', 1) }}</label>
+            <div class="col-lg-4 fv-row">
+                <input type="file" name="image" class="form-control form-control-lg form-control-solid">
+                @if($user->image)
+                <img src="{{ url('/') }}/uploads/{{$user->image}}" style="width:50px; height:50px;" />
+                @else
+                <input type="file" name="image" class="form-control form-control-lg form-control-solid">
+                @endif
+            </div>
+
+
+
 
     <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.role', 1) }}</label>
 
     <div class="col-lg-4 fv-row">
+
+
         <select class="form-control form-control-solid" name="role">
           <option value="2">Engineer</option>
 

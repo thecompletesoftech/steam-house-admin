@@ -4,7 +4,7 @@ return [
     'role' => 'Role|Roles',
     'user' => 'User|Users',
     'customer' => 'Customer|Customers',
-    
+
     'admin' => 'Admin|Admins',
     'permission' => 'Permission|Permissions',
     'change_password' => 'Change Password',
@@ -16,7 +16,12 @@ return [
     'admin_profile' => 'Admin Profile|Admin Profiles',
     'contactus' => 'Contact Us|Contact Us',
     'addplace' => 'Add Place |Add Places',
-    
+    'manager' => 'Manager |Managers',
+    'engineer' => 'Enginner |Enginners',
+    'company' => 'Company |Companys',
+    'location' => 'Location |Locations',
+    'service'=>'Service|Services',
+
 
 
     'save' => 'Save',

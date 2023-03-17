@@ -12,40 +12,17 @@ class ManagerUserService
     {
 
 
-        return User::create([
-
-            'username' => $data['username'],
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'image' => $data['image'],
-            'about' => $data['about'],
-            'address' => $data['address'],
-            'password' => Hash::make($data['password']),
-            'c_password' => Hash::make($data['c_password']),
-            'role' => $data['role'],
-          ]);
+        $data = User::create($data);
+        return $data;
     }
 
-    public static function update(array $data)
+    public static function update(array $data,User $user)
     {
 
 
-        $data = DB::table('users')->where('id',$data['id'])->update($data);
+        $data = $user->update($data);
         return $data;
-        // $data = $user->update($data);
-        // $data = User::update([
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'phone' => $data['phone'],
-        //     'about' => $data['about'],
-        //     'password' => Hash::make($data['password']),
-        //     'c_password' => Hash::make($data['c_password']),
-        //     'role' => $data['role'],
-        //   ]);
-        // return $data;
     }
-
     public static function updateById(array $data, $id)
     {
 
@@ -73,10 +50,13 @@ class ManagerUserService
 
     public static function datatable()
     {
-        $data = DB::select('select * from users where role = ?', [1]);
-        // $data = DB::select('select * from users where role = :role', ['role' => 1]);
-        // $data = User::get();
-        // $data = DB::table('users')->orderBy('created_at', 'asc')->get();
+        // $data = DB::select('select * from users where role = ?', [1]);
+
+        $data = DB::table('users')
+        ->select('users.*','location.location')
+        ->join('location','location.location_id','=','users.address',)
+        ->where('role',1)
+        ->orderBy('users.created_at', 'desc')->get();
         return $data;
     }
 

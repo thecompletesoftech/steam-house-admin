@@ -12,28 +12,16 @@ class CompanyListService
     {
 
 
-        return User::create([
-
-            'meter_id' => $data['meter_id'],
-            'manager_id' => $data['manager_id'],
-            'username' => $data['username'],
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'about' => $data['about'],
-            'image' => $data['image'],
-            'address' => $data['address'],
-            // 'longitude' => $data['longitude'],
-            'password' => Hash::make($data['password']),
-            'c_password' => Hash::make($data['c_password']),
-            'role' => $data['role'],
-          ]);
+        $data = User::create($data);
+        return $data;
     }
 
     public static function update(array $data, User $user)
     {
 
-        $data = $user->update($data);
+
+        $data = User::where('id',$data['id'])->update($data);
+
 
         return $data;
     }
@@ -41,7 +29,9 @@ class CompanyListService
     public static function updateById(array $data, $id)
     {
 
+
         $data = User::whereId($id)->update($data);
+
         return $data;
     }
 

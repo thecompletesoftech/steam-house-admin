@@ -24,16 +24,16 @@ class CompanyListRequest extends FormRequest
     public function rules()
     {
 
-        if (!request()->is('admin/users/create')) {
+        if (!request()->is('admin/companylists/create')) {
             return [
-                //  'meter_id' => 'required|unique:users,meter_id',
+                 'meter_id' => 'required|unique:users,meter_id',
                 'username' => 'required',
                 'name' => 'required|max:150',
                 'email' => 'required',
-                'phone' => 'required',
-                'about' => 'required',
+                'phone' => 'required|number|max:10|unique:users,phone',
+
                 'password' => 'required',
-                'c_password' => 'required',
+                'c_password' => 'required_with:password|same:password',
                 // 'role' => 'required',
 
 
@@ -42,14 +42,14 @@ class CompanyListRequest extends FormRequest
 
         } else {
             return [
-                //  'meter_id' => 'required|unique:users,meter_id',
+                 'meter_id' => 'required|unique:users,meter_id',
                 'username' => 'required',
                 'name' => 'required',
                 'email' => 'required',
-                'phone' => 'required',
-                'about' => 'required',
+                'phone' => 'required|number|max:10|unique:users,phone',
+
                 'password' => 'required',
-                'c_password' => 'required',
+                'c_password' => 'required_with:password|same:password',
                 'role' => 'required',
             ];
         }
@@ -69,7 +69,7 @@ class CompanyListRequest extends FormRequest
             // 'phone.phone' => __('validation.phone', ['attribute' => 'Phone']),
             // 'phone.unique' => __('validation.unique', ['attribute' => 'Phone']),
             'meter_id.required' => __('validation.required', ['attribute' => 'Meter ID']),
-            'about.required' => __('validation.required', ['attribute' => 'About']),
+
             'phone.required' => __('validation.required', ['attribute' => 'phone']),
             'password.required' => __('validation.required', ['attribute' => 'password']),
             'c_password.required' => __('validation.required', ['attribute' => 'confirm password']),

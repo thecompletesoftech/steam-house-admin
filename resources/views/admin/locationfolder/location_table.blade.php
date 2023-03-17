@@ -25,7 +25,7 @@
                         <i class="fa fa-pen"></i>
                     </span>
         </a>
-        <a href="{{ url('/') }}/admin/locations/destroy/{{$user->location_id}}" title="Delete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
+        <a  onclick="return confirm('Are you sure you want to delete ?')"  href="{{ url('/') }}/admin/locations/destroy/{{$user->location_id}}" title="Delete" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
                     <span class="svg-icon svg-icon-3">
                         <i class="fa fa-trash"></i>
                     </span>

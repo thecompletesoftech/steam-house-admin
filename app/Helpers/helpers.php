@@ -205,7 +205,6 @@ function createJsonIfNotExists()
 function getNameById($id)
     {
         $data = User::where('id',$id)->first();
-
         return $data->name;
 
 

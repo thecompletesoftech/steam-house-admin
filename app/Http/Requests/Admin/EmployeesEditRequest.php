@@ -28,13 +28,13 @@ class EmployeesEditRequest extends FormRequest
             return [
                 //  'meter_id' => 'required|unique:users,meter_id',
                 // 'username' => 'required|max:150|unique:users,username',
-                'name' => 'required|max:150',
+                // 'name' => 'required|max:150',
                 // 'email' => 'required|email|unique:users,email',
                 // 'phone' => 'required|unique:users,phone',
-                'about' => 'required',
-                'password' => 'required',
-                'c_password' => 'required',
-                'role' => 'required',
+                // 'about' => 'required',
+                // 'password' => 'required',
+                'c_password' => 'same:password',
+                // 'role' => 'required',
 
 
 
@@ -44,13 +44,13 @@ class EmployeesEditRequest extends FormRequest
             return [
                 //  'meter_id' => 'required|unique:users,meter_id',
                 // 'username' => 'unique:users,username',
-                'name' => 'required',
+                // 'name' => 'required',
                 // 'email' => 'required|email|unique:users,email',
                 // 'phone' => 'required|unique:users,phone',
-                'about' => 'required',
-                'password' => 'required',
-                'c_password' => 'required',
-                'role' => 'required',
+                // 'about' => 'required',
+                // 'password' => 'required',
+                'c_password' => 'same:password',
+                // 'role' => 'required',
             ];
         }
     }

@@ -51,7 +51,7 @@
         </div>
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.pictures', 1) }}</label>
         <div class="col-lg-4 fv-row">
-                {!! Form::file('pictures', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.pictures', 1)]) !!}
+            <input type="file" name="pictures" class="form-control form-control-lg form-control-solid">
         </div>
     </div>
 
@@ -63,7 +63,7 @@
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.phone', 1) }}</label>
 
         <div class="col-lg-4 fv-row">
-                {!! Form::text('phone', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.phone', 1)]) !!}
+                {!! Form::number('phone', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.phone', 1)]) !!}
         </div>
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.discription', 1) }}</label>
 

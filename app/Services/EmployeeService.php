@@ -12,23 +12,8 @@ class EmployeeService
     {
 
 
-        return User::create([
-
-            'manager_id' => $data['manager_id'],
-            'username' => $data['username'],
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'about' => $data['about'],
-            'image' => $data['image'],
-            'emo_expert' => $data['emo_expert'],
-            'address' => $data['address'],
-            // 'latitude' => $data['latitude'],
-            // 'longitude' => $data['longitude'],
-            'password' => Hash::make($data['password']),
-            'c_password' => Hash::make($data['c_password']),
-            'role' => $data['role'],
-          ]);
+        $data = User::create($data);
+        return $data;
     }
 
     public static function update(array $data)
@@ -77,13 +62,13 @@ class EmployeeService
 
     public static function datatable()
     {
-        $data = DB::select('select * from users where role = ?', [2]);
+        // $data = DB::select('select * from users where role = ?', [2]);
 
-        // $data = DB::table('users')
-        // ->select('users.*','location.location as address','users.created_at as users')
-        // ->join('users','users.id','=','location.location_id')
-        // ->orderBy('users.created_at', 'desc')->get();
-
+        $data = DB::table('users')
+        ->select('users.*','location.location')
+        ->join('location','location.location_id','=','users.address',)
+        ->where('role',2)
+        ->orderBy('users.created_at', 'desc')->get();
         return $data;
     }
 

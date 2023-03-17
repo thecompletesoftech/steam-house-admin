@@ -86,13 +86,12 @@ class ServicesRequestController extends Controller
         $input = $request->except(['_token', 'proengsoft_jsvalidation']);
         // print_r( $input);
         // die;
-        if(!empty($request->pictures)){
-        $image=$request->file('pictures');
-        $filename = time().$image->getClientOriginalName();
-        $destinationPath = public_path('/servicerequests/image/');
-        $image->move($destinationPath, $filename);
-        $input['pictures']=$filename;
-            }
+        if(!empty($input['pictures']))
+        {
+            $manager_image=$request->file('pictures');
+            $picture=FileService::fileUploaderWithoutRequest($manager_image,'servicerequest/image/');
+            $input['pictures']= $picture;
+    }
 
 
         $battle = $this->servicerequest->create($input);
@@ -109,24 +108,21 @@ class ServicesRequestController extends Controller
 
     public function edit(ServiceRequestModel $servicerequest)
     {
-
-        return view($this->edit_view,compact('servicerequest'));
+        $manager=user::where('role','1')->get();
+        $company=user::where('role','0')->get();
+        return view($this->edit_view,compact('servicerequest','manager','company'));
     }
 
 
     public function update(ServiceRequest $request, ServiceRequestModel $servicerequest)
     {
         $input = $request->except(['_method', '_token', 'proengsoft_jsvalidation']);
-
-        if(!empty($request->pictures)){
-            $image=$request->file('pictures');
-        $filename = time().$image->getClientOriginalName();
-        $destinationPath = public_path('/servicerequests/image/');
-        $image->move($destinationPath, $filename);
-        $input['pictures']=$filename;
-             $input['imeg']=$request->image;
-            }
-
+        if(!empty($input['pictures']))
+        {
+            $manager_image=$request->file('pictures');
+            $picture=FileService::fileUploaderWithoutRequest($manager_image,'servicerequest/image/');
+            $input['pictures']= $picture;
+    }
         $this->servicerequest->update($input,$servicerequest);
         return redirect()->route($this->index_route_name)->with('success',
         $this->mls->messageLanguage('updated', 'servicerequest update', 1));

@@ -95,9 +95,8 @@ class ServiceRequestService
 
         $data = DB::table('service_request')
         ->select('service_request.*','service_request.id as id','service_request.Service_request','users.name as managername','service_request.manger_id as manger_id','service_request.created_at as service_request')
-        ->join('users','users.id','=','service_request.manger_id')
+        ->join('users','users.id','=','service_request.manger_id',)
         ->orderBy('service_request.created_at', 'desc')->get();
-
         return $data;
     }
 }

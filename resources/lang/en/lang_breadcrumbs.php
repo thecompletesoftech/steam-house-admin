@@ -6,8 +6,8 @@ return [
     'role' => 'Role|Roles',
     'user' => 'User|Users',
     'customer' => 'Customer|Customers',
-    
-    
+
+
     'admin' => 'Admin|Admins',
     'permission' => 'Permission|Permissions',
     'change_password' => 'Change Password',
@@ -22,8 +22,15 @@ return [
     'addplace' => 'AddPlace|AddPlaces',
     'book' => 'Book|Books',
     'contactus' => 'Contact Us|Contact Us',
+    'managerregistration' => 'Manager|Managers',
+    'employeeregistration' => 'Engineer|Engineers',
+    'company' => 'Company|Companys',
+    'location' => 'Location|Locations',
+    'servicerequest' => 'Service|Services',
 
-    
+
+
+
 
     'save' => 'Save',
     'status' => 'Status',
