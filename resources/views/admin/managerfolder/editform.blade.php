@@ -27,27 +27,35 @@
     </div>
 
     <div class="row mb-6">
-        <label class="col-lg-2 col-form-label required fw-bold fs-6"/>Username</label>
-            <div class="col-lg-4 fv-row">
-                {!! Form::text('username', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.username', 1)]) !!}
-            </div>
 
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.name', 1) }}</label>
-            <div class="col-lg-4 fv-row">
-                {!! Form::text('name', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.registration_name', 1)]) !!}
-            </div>
+        <div class="col-lg-4 fv-row">
+            {!! Form::text('name', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.registration_name', 1)]) !!}
+        </div>
+
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.phone', 1) }}</label>
+        <div class="col-lg-4 fv-row">
+            {!! Form::text('phone', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.phone', 1)]) !!}
+        </div>
+
+
+
+
     </div>
 
     <div class="row mb-6">
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.phone', 1) }}</label>
-            <div class="col-lg-4 fv-row">
-                {!! Form::text('phone', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.phone', 1)]) !!}
-            </div>
 
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.email', 1) }}</label>
-            <div class="col-lg-4 fv-row">
-                {!! Form::text('email', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.registration_email', 1)]) !!}
-            </div>
+        <div class="col-lg-4 fv-row">
+            {!! Form::text('email', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.registration_email', 1)]) !!}
+        </div>
+
+
+        <label class="col-lg-2 col-form-label required fw-bold fs-6"/>Username</label>
+        <div class="col-lg-4 fv-row">
+            {!! Form::text('username', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.username', 1)]) !!}
+        </div>
+
 
 
     </div>

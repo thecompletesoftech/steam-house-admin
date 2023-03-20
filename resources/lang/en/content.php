@@ -363,11 +363,14 @@ return [
      'managers' => 'Manager Name',
 
 
+
     // Company list & Location
      'company_name' => 'Company',
      'location' => 'Location',
      'company_list' => 'Company List',
      'company_username' => 'Company Username',
+     'company_name' => 'Company',
+
 
 
 

@@ -59,7 +59,7 @@ class CompanyEditRequest extends FormRequest
     {
         return [
             // 'meater_id.required' => __('validation.required', ['attribute' => 'Manager Id']),
-            'name.required' => __('validation.required', ['attribute' => 'Name']),
+            // 'name.required' => __('validation.required', ['attribute' => 'Name']),
             // 'email.required' => __('validation.required', ['attribute' => 'Email']),
             // 'email.email' => __('validation.email', ['attribute' => 'Email']),
             // 'email.unique' => __('validation.unique', ['attribute' => 'Email']),
@@ -69,10 +69,10 @@ class CompanyEditRequest extends FormRequest
             // 'phone.phone' => __('validation.phone', ['attribute' => 'Phone']),
             // 'phone.unique' => __('validation.unique', ['attribute' => 'Phone']),
             // 'meter_id.required' => __('validation.required', ['attribute' => 'Manager Id']),
-            'about.required' => __('validation.required', ['attribute' => 'About']),
-            'password.required' => __('validation.required', ['attribute' => 'password']),
+            // 'about.required' => __('validation.required', ['attribute' => 'About']),
+            // 'password.required' => __('validation.required', ['attribute' => 'password']),
             'c_password.required' => __('validation.required', ['attribute' => 'confirm password']),
-            'role.required' => __('validation.required', ['attribute' => 'role']),
+            // 'role.required' => __('validation.required', ['attribute' => 'role']),
         ];
     }
 }

@@ -16,6 +16,17 @@
    </div>
 
 
+   <label class="col-lg-2 col-form-label required fw-bold fs-6">Manager</label>
+   <div class="col-lg-4 fv-row">
+  {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
+  <select class="form-control form-control-solid" name="manager_id">
+      <option  value="" >--Select Manager--</option>
+      @foreach($manager as $data)
+
+      <option value="{{ $data->id }}" {{  $user->manager_id == $data->id   ? 'selected' : '' }} >{{$data->name}}</option>
+@endforeach
+  </select>
+   </div>
 
 
 

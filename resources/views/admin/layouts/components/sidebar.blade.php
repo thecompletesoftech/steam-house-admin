@@ -251,7 +251,7 @@
                     </a>
                 </div>
 
-                    <div class="menu-item">
+                    {{-- <div class="menu-item">
                         <a class="menu-link {{ checkActiveSideBar(['customerdata']) ? 'menu-item active' : '' }}"
                             href="{{ route('admin.customerdatas.index') }}">
                             <span class="menu-icon">
@@ -263,7 +263,7 @@
                             </span>
                             <span class="menu-title">Live Data</span>
                         </a>
-                    </div>
+                    </div> --}}
                 </div>
                 <!--end::Menu-->
             </div>

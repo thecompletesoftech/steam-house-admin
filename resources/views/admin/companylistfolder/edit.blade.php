@@ -2,7 +2,7 @@
 @section('content')
 
     @include('admin.layouts.components.header', [
-        'title' => __('messages.edit', ['name' => trans_choice('content.Registration_name', 1)]),
+        'title' => __('messages.edit', ['name' => trans_choice('content.company_name', 1)]),
         'breadcrumbs' => Breadcrumbs::render('admin.companylists.edit'),
     ])
 
