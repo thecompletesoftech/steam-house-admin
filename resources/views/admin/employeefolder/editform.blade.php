@@ -4,6 +4,17 @@
 
     <div class="row mb-6">
 
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">Location</label>
+                <div class="col-lg-4 fv-row">
+                        <select class="form-control form-control-solid" name="address">
+                            <option >--Select location--</option>
+                            @foreach($location as $data)
+
+                            <option value="{{ $data->location_id }}" {{  $user->address == $data->location_id   ? 'selected' : '' }} >{{$data->location}}</option>
+                    @endforeach
+                        </select>
+                </div>
+
 
         <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manager', 1) }}</label>
                 <div class="col-lg-4 fv-row">
@@ -11,26 +22,19 @@
                         <select class="form-control form-control-solid" name="manager_id">
                             <option >--Select Manager--</option>
                             @foreach($manager as $data)
-                            <option value="{{$data->id}}">{{$data->name}}</option>
+
+                            <option value="{{ $data->id }}" {{  $user->manager_id == $data->id   ? 'selected' : '' }} >{{$data->name}}</option>
                     @endforeach
                         </select>
                 </div>
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.address', 1) }}</label>
-                <div class="col-lg-4 fv-row">
-                        <select class="form-control form-control-solid" name="address">
-                            <option >--Select location--</option>
-                            @foreach($location as $data)
-                            <option value="{{$data->location_id}}">{{$data->location}}</option>
-                    @endforeach
-                        </select>
-                </div>
+
 
 
     </div>
 
     <div class="row mb-6">
 
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.username', 1) }}</label>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">Username</label>
         <div class="col-lg-4 fv-row">
             {!! Form::text('username', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.username', 1)]) !!}
         </div>
@@ -105,8 +109,8 @@
                 <input type="file" name="image" class="form-control form-control-lg form-control-solid">
                 @if($user->image)
                 <img src="{{ url('/') }}/uploads/{{$user->image}}" style="width:50px; height:50px;" />
-                @else
-                <input type="file" name="image" class="form-control form-control-lg form-control-solid">
+                {{-- @else --}}
+                {{-- <input type="file" name="image" class="form-control form-control-lg form-control-solid"> --}}
                 @endif
             </div>
 

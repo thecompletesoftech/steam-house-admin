@@ -1,16 +1,18 @@
 <div class="card-body">
 
     <div class="row mb-6">
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.address', 1) }}</label>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">Location</label>
         <div class="col-lg-4 fv-row">
                 {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
                 <select class="form-control form-control-solid" name="address">
 
                     @foreach($location as $data)
-                    <option value="{{$data->location_id}}">{{$data->location}}</option>
+                    <option value="{{ $data->location_id }}" {{  $manager->address == $data->location_id   ? 'selected' : '' }} >{{$data->location}}</option>
             @endforeach
                 </select>
+
             </div>
+
 
        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.image', 1) }}</label>
             <div class="col-lg-4 fv-row">
@@ -25,7 +27,7 @@
     </div>
 
     <div class="row mb-6">
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.username', 1) }}</label>
+        <label class="col-lg-2 col-form-label required fw-bold fs-6"/>Username</label>
             <div class="col-lg-4 fv-row">
                 {!! Form::text('username', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.username', 1)]) !!}
             </div>

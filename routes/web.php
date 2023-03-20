@@ -66,6 +66,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('/users/edit/{id}/{edit}', 'edit')->name('users.edit');
 
 
+
             Route::post('/users/download', 'export')->name('users.download');
 
 
@@ -110,6 +111,8 @@ Route::controller(SteamHouseController::class)->group(function () {
     Route::get('/managerregistrations/status/{id}/{status}','status')->name('managerregistrations.status');
     Route::get('/managerregistrations/destroy/{id}/','destroy')->name('managerregistrations.destroy');
     Route::get('/managerregistrations/edit/{id}/','edit')->name('managerregistrations.edit');
+    Route::get('/managerregistrations/locationdata/{id}', 'locationdata')->name('managerregistrations.locationdata');
+
     });
     Route::resource('/managerregistrations',ManagerRegistrationController::class);
 

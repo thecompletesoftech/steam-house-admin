@@ -8,7 +8,7 @@
         <label class="col-lg-2 col-form-label required fw-bold fs-6">Location</label>
         <div class="col-lg-4 fv-row">
                 <select class="form-control form-control-solid" name="address">
-                    <option >--Select location--</option>
+                    <option value="" >--Select location--</option>
                     @foreach($location as $data)
                     <option value="{{$data->location_id}}">{{$data->location}}</option>
             @endforeach
@@ -19,7 +19,7 @@
                 <div class="col-lg-4 fv-row">
                         {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
                         <select class="form-control form-control-solid" name="manager_id">
-                            <option >--Select Manager--</option>
+                            <option  value="" >--Select Manager--</option>
                             @foreach($manager as $data)
                             <option value="{{$data->id}}">{{$data->name}}</option>
                     @endforeach
@@ -88,11 +88,6 @@
 
         <div class="col-lg-4 fv-row">
                 {!! Form::text('about', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.registration_about', 1)]) !!}
-        </div>
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.emo_expert', 1) }}</label>
-
-        <div class="col-lg-4 fv-row">
-                {!! Form::text('emo_expert', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.emo_expert', 1)]) !!}
         </div>
 
 

@@ -20,7 +20,9 @@ class ManagerUserService
     {
 
 
-        $data = $user->update($data);
+
+        $data = User::where('id',$data['id'])->update($data);
+
         return $data;
     }
     public static function updateById(array $data, $id)

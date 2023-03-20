@@ -24,8 +24,8 @@
                                     <!--begin::Col-->
                                     <div class="col bg-light-primary px-6 py-8 rounded-2 me-7 mb-7">
                                         <!--begin::Svg Icon | path: icons/duotone/Communication/Add-user.svg-->
-                                        <span class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"  style="background-color:lightblue;border-radius:7px;">
-                                           <img src="https://freesvg.org/img/1530723380.png" alt="" height="40" width="40">
+                                        <span class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"  >
+                                           <i class="fa fa-user" style="font-size: 25px;color:black;"></i>
                                            <!-- <img alt="Logo" src="{{asset('admin/dist/media/logos/adventureboy.png')}}" class="h-90px" height="20" width="20" />  -->
                                            <h4 class="text-dark fw-bold fs-6"><span class="new_users">0</span>
                                             </h4>

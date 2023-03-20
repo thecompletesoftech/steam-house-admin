@@ -118,13 +118,8 @@ class ManagerRegistrationController extends Controller
 
 
         $manager=User::where('role','1')->where('id',$id)->first();
-
        $image=$manager->image;
-
         $location = DB::table('location')->get();
-
-
-
 
         return view($this->edit_view,compact('manager','image','location'));
     }
@@ -147,7 +142,9 @@ class ManagerRegistrationController extends Controller
     $input['password']=Hash::make($request->password);
     }
 
-        $this->user->update($input,$user);
+
+
+    $this->user->update($input,$user);
         return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'manager', 1));
 
     }
@@ -155,12 +152,27 @@ class ManagerRegistrationController extends Controller
     public function destroy($id)
     {
 
-        $result=DB::table('users')->where('id', $id)->delete();
+        $result=UserService::delete_user($id);
 
         return redirect()->back()->withSuccess('Data Delete Successfully!');
 
+    }
+
+
+    public function locationdata($id){
+
+        $data=DB::table('users')->select('*','users.id as id')->join('location','location.location_id','=','users.address')->
+        join('service_request','service_request.user_id','=','users.id')->where('users.id',$id)->first();
+
+
+        $manager=DB::table('users')->select('name','id')->where('id',$data->manager_id)->first();
+
+        return $manager->name;
 
     }
+
+
+
 
 
 

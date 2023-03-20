@@ -9,16 +9,14 @@
 
   <tr>
     <th>ID No.</th>
-    <th>Meter ID.</th>
-
-
-    <th>NAME</th>
-    <th>EMAIl</th>
-    <th>PHONE</th>
-    <th>USERNAME</th>
-    <th>IMAGE</th>
-    <th>ADDRESS</th>
-    <th>ABOUT</th>
+    <th>Location</th>
+    <th>Company Name</th>
+    <th>Meter Id</th>
+    <th>Phone</th>
+    <th>Email</th>
+    <th>Image</th>
+    <th>Company Address</th>
+    <th>About</th>
     <th>ACTION</th>
   </tr>
 
@@ -27,13 +25,12 @@
   <tr>
 
     <td>{{$user->id }}</td>
-    <td>{{$user->meter_id}}</td>
-
-
+    <td>{{$user->address }}</td>
     <td>{{$user->name}}</td>
-    <td>{{$user->email}}</td>
+    <td>{{$user->meter_id}}</td>
     <td>{{$user->phone}}</td>
-    <td>{{$user->username}}</td>
+    <td>{{$user->email}}</td>
+
     <td>
         @if(!empty($user->image))
         <img src="{{ url('/') }}/uploads/{{$user->image}}" style="width:50px; height:50px;border-radius: 25px;" />

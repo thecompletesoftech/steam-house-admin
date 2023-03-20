@@ -9,13 +9,12 @@
 
   <tr>
     <th>ID No.</th>
-    <th>Name</th>
-    <th>Email</th>
-    <th>Image</th>
-    <th>Phone</th>
     <th>Location</th>
+    <th>Image</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Email</th>
     <th>About</th>
-    <th>Role</th>
     <th>ACTION</th>
   </tr>
 
@@ -24,9 +23,7 @@
   <tr>
 
     <td>{{$user->id }}</td>
-
-    <td>{{$user->name}}</td>
-    <td>{{$user->email}}</td>
+    <td>{{$user->location}}</td>
     <td>
         @if(!empty($user->image))
         <img src="{{ url('/') }}/uploads/{{$user->image}}" style="width:50px; height:50px;border-radius: 25px;" />
@@ -37,22 +34,14 @@
 
 
     </td>
+    <td>{{$user->name}}</td>
     <td>{{$user->phone}}</td>
-    <td>{{$user->location}}</td>
+    <td>{{$user->email}}</td>
+
+
+
     <td>{{$user->about}}</td>
-    <td>
-        <span class="svg-icon svg-icon-3">
 
-             <?php if($user->role==1){?>
-
-                <span>Manager</span>
-             <?php  } ?>
-             <?php if($user->role==2){?>
-
-                <span>Engineer</span>
-             <?php  } ?>
-                      </span>
-                    </a> </td>
     <td>
         <a href="{{ url('/') }}/admin/managerregistrations/{{$user->id}}/edit" title="Edit" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" >
                     <span class="svg-icon svg-icon-3">

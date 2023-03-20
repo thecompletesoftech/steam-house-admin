@@ -178,45 +178,6 @@
                             <span class="menu-title">Users</span>
                         </a>
                     </div> --}}
-                    <div class="menu-item">
-                        <a class="menu-link {{ checkActiveSideBar(['managerregistration']) ? 'menu-item active' : '' }}"
-                            href="{{ route('admin.managerregistrations.index') }}">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                    <i class="fa fa-user" style="color:white;font-size:15px;"></i>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </span>
-                            <span class="menu-title">Manager</span>
-                        </a>
-                    </div>
-                     <div class="menu-item">
-                        <a class="menu-link {{ checkActiveSideBar(['employeeregistration']) ? 'menu-item active' : '' }}"
-                            href="{{ route('admin.employeeregistrations.index') }}">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                    <i class="fa fa-user" style="color:white;font-size:15px;"></i>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </span>
-                            <span class="menu-title">Engineer</span>
-                        </a>
-                    </div>
-                    <div class="menu-item">
-                        <a class="menu-link {{ checkActiveSideBar(['company']) ? 'menu-item active' : '' }}"
-                            href="{{ route('admin.companylists.index') }}">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                <i class="fa fa-list " style="color:white;font-size:15px;"></i>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </span>
-                            <span class="menu-title">Company List</span>
-                        </a>
-                    </div>
 
                     <div class="menu-item">
                         <a class="menu-link {{ checkActiveSideBar(['location']) ? 'menu-item active' : '' }}"
@@ -231,6 +192,50 @@
                             <span class="menu-title">Add Location</span>
                         </a>
                     </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link {{ checkActiveSideBar(['managerregistration']) ? 'menu-item active' : '' }}"
+                            href="{{ route('admin.managerregistrations.index') }}">
+                            <span class="menu-icon">
+                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <i class="fa fa-user" style="color:white;font-size:15px;"></i>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-title">Manager</span>
+                        </a>
+                    </div>
+
+                    <div class="menu-item">
+                        <a class="menu-link {{ checkActiveSideBar(['company']) ? 'menu-item active' : '' }}"
+                            href="{{ route('admin.companylists.index') }}">
+                            <span class="menu-icon">
+                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                <i class="fa fa-list " style="color:white;font-size:15px;"></i>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-title">Company</span>
+                        </a>
+                    </div>
+                     <div class="menu-item">
+                        <a class="menu-link {{ checkActiveSideBar(['employeeregistration']) ? 'menu-item active' : '' }}"
+                            href="{{ route('admin.employeeregistrations.index') }}">
+                            <span class="menu-icon">
+                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <i class="fa fa-user-check" style="color:white;font-size:15px;"></i>
+                                </span>
+                                <!--end::Svg Icon-->
+                            </span>
+                            <span class="menu-title">Engineer</span>
+                        </a>
+                    </div>
+
+
+
 
                     <div class="menu-item">
                         <a class="menu-link {{ checkActiveSideBar(['servicerequest']) ? 'menu-item active' : '' }}"

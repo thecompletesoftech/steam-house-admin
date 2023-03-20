@@ -31,7 +31,8 @@ class EmployeesRequest extends FormRequest
                 'name' => 'required|max:150',
                 'email' => 'required|email|unique:users,email',
                 'phone' => 'required|number|max:10|unique:users,phone',
-
+                'address'=>'required',
+                'manager_id'=>'required',
                 'password' => 'required',
                 'c_password' => 'required_with:password|same:password',
                 'role' => 'required',
@@ -47,7 +48,8 @@ class EmployeesRequest extends FormRequest
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
                 'phone' => 'required|number|max:10|unique:users,phone',
-
+                'address'=>'required',
+                'manager_id'=>'required',
                 'password' => 'required',
                 'c_password' => 'required_with:password|same:password',
                 'role' => 'required',
@@ -69,6 +71,8 @@ class EmployeesRequest extends FormRequest
             'phone.phone' => __('validation.phone', ['attribute' => 'Phone']),
             'phone.unique' => __('validation.unique', ['attribute' => 'Phone']),
             'meter_id.required' => __('validation.required', ['attribute' => 'Manager Id']),
+            'address.required' => __('validation.required', ['attribute' => 'Location']),
+            'manager_id.required' => __('validation.required', ['attribute' => 'Manager']),
 
             'phone.required' => __('validation.required', ['attribute' => 'phone']),
             'password.required' => __('validation.required', ['attribute' => 'password']),

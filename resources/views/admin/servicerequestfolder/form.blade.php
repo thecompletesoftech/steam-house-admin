@@ -5,31 +5,51 @@
 
     <div class="row mb-6">
 
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.user_id', 1) }}</label>
+
+
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">Location</label>
         <div class="col-lg-4 fv-row">
                 {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
-                <select class="form-control form-control-solid" name="user_id">
-                    <option >--Select Company--</option>
-                    @foreach($company as $data)
-                    <option value="{{$data->id}}">{{$data->name}}</option>
+                <select class="form-control form-control-solid" name="address">
+                    <option value="">--Select Location--</option>
+
+                    @foreach($location as $data)
+                    <option value="{{$data->location_id}}">{{$data->location}}</option>
+
                     @endforeach
                 </select>
             </div>
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manager_id', 1) }}</label>
+
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">Company</label>
             <div class="col-lg-4 fv-row">
                     {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
-                    <select class="form-control form-control-solid" name="manger_id">
-                        <option >--Select Manager--</option>
-                        @foreach($manager as $data)
+                    <select class="form-control form-control-solid" name="user_id">
+                        <option value="">--Select Company--</option>
+                        @foreach($company as $data)
                         <option value="{{$data->id}}">{{$data->name}}</option>
+
                         @endforeach
                     </select>
                 </div>
-        {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manger_id', 1) }}</label>
-        <div class="col-lg-4 fv-row">
-                {!! Form::text('manger_id', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.manger_id', 1)]) !!}
-        </div> --}}
     </div>
+
+    <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manager_id', 1) }}</label>
+        <div class="col-lg-4 fv-row">
+                {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
+
+                <select name="manger_id"
+                                class="form-control form-control-solid">
+                                <option value="">--Select Manager--</option>
+                                @foreach($manager as $data)
+                                <option value="{{$data->id}}">{{$data->name}}</option>
+                                @endforeach
+                            </select>
+            </div>
+
+
+    </div>
+
     <div class="row mb-6">
         {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.emp_id', 1) }}</label>
             <div class="col-lg-4 fv-row">
@@ -97,6 +117,43 @@
             $('.datetimepicker').datetimepicker();
         });
     </script>
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $("document").ready(function () {
+
+                $('select[name="user_id"]').on('change', function () {
+                    var catId = $(this).val();
+                    alert(catId);
+                    if (catId) {
+                        $.ajax({
+                            // url: '/admin/managerregistrations/locationdata/' + catId,
+                            url: '{{url('/admin/managerregistrations/locationdata')}}/' + catId,
+                            type: "GET",
+                            dataType: "json",
+                            alert("Data");
+                            success: function (data) {
+
+                                $('select[name="manger_id"]').empty();
+                                $.each(data, function (key, value) {
+                                    $('select[name="manger_id"]').append('<option value=" ' + key + '">' + value + '</option>');
+                                })
+                            }
+
+                        })
+                    } else {
+                        $('select[name="manger_id"]').empty();
+                    }
+                });
+
+
+            });
+        </script>
+
+
+
+
 
     <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\Admin\ServiceRequest', 'form') !!}

@@ -79,7 +79,8 @@ class CompanyListController extends Controller
     {
 
         $location = DB::table('location')->get();
-        $manager=user::where('role','1')->get();
+        $manager=User::where('role','1')->get();
+
         return view($this->create_view, compact('manager','location'));
 
     }
@@ -152,7 +153,7 @@ class CompanyListController extends Controller
     public function destroy($id)
     {
 
-        $result=DB::table('users')->where('id', $id)->delete();
+        $result=UserService::delete_company($id);
 
         return redirect()->back()->withSuccess('Data Delete Successfully!');
 

@@ -8,6 +8,7 @@ use App\Http\Requests\Admin\ServiceRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\ServiceRequestModel;
 use App\Models\User;
+use App\Models\LocationModel;
 use App\Services\ServiceRequestService;
 use App\Services\FileService;
 use App\Services\ManagerLanguageService;
@@ -75,7 +76,8 @@ class ServicesRequestController extends Controller
     {
         $manager=user::where('role','1')->get();
         $company=user::where('role','0')->get();
-        return view($this->create_view, compact('manager','company'));
+        $location=LocationModel::get();
+        return view($this->create_view, compact('manager','company','location'));
         // return view($this->create_view);
     }
 
@@ -108,9 +110,10 @@ class ServicesRequestController extends Controller
 
     public function edit(ServiceRequestModel $servicerequest)
     {
-        $manager=user::where('role','1')->get();
-        $company=user::where('role','0')->get();
-        return view($this->edit_view,compact('servicerequest','manager','company'));
+        $manager=User::where('role','1')->get();
+        $location=LocationModel::get();
+        $company=User::where('role','0')->get();
+        return view($this->edit_view,compact('servicerequest','manager','company','location'));
     }
 
 

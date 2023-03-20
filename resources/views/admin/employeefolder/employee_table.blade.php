@@ -9,15 +9,17 @@
 
     <tr>
         <th>ID No.</th>
+        <th>Location</th>
         <th>Manager</th>
 
         <th>Name</th>
+        <th>Phone</th>
         <th>Email</th>
 
-        <th>Emp. Photo</th>
-        <th>Username</th>
-        <th>Phone</th>
-        <th>Location</th>
+        <th>Image</th>
+
+
+
         <th>About</th>
 
         <th>ACTION</th>
@@ -28,6 +30,7 @@
       <tr>
 
         <td>{{$user->id }}</td>
+        <td>{{$user->location}}</td>
         <td>
             @if(!empty($user->manager_id))
             {{getNameById($user->manager_id)}}
@@ -35,6 +38,7 @@
         </td>
 
         <td>{{$user->name}}</td>
+        <td>{{$user->phone}}</td>
         <td>{{$user->email}}</td>
 
         <td>
@@ -44,9 +48,9 @@
                 <img src="{{ asset('blank_user.PNG') }}" style="width:50px; height:50px;border-radius: 25px;" />
             @endif
         </td>
-        <td>{{$user->username}}</td>
-        <td>{{$user->phone}}</td>
-        <td>{{$user->location}}</td>
+
+
+
         <td>{{$user->about}}</td>
 
 

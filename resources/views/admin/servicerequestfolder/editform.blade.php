@@ -5,28 +5,47 @@
 
     <div class="row mb-6">
 
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.user_id', 1) }}</label>
+
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">Location</label>
         <div class="col-lg-4 fv-row">
                 {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
-                <select class="form-control form-control-solid" name="user_id">
-                    @foreach($company as $data)
-                    <option value="{{$data->id}}">{{$data->name}}</option>
+                <select class="form-control form-control-solid" name="address">
+                    <option value="" >--Select Location--</option>
+                    @foreach($location as $data)
+                    {{-- <option value="{{$data->id}}">{{$data->location}}</option> --}}
+                    <option value="{{ $data->id }}" {{  $servicerequest->address == $data->location_id   ? 'selected' : '' }} >{{$data->location}}</option>
                     @endforeach
                 </select>
             </div>
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manager_id', 1) }}</label>
+
+            <label class="col-lg-2 col-form-label required fw-bold fs-6">Company</label>
             <div class="col-lg-4 fv-row">
                     {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
-                    <select class="form-control form-control-solid" name="manger_id">
-                        @foreach($manager as $data)
-                        <option value="{{$data->id}}">{{$data->name}}</option>
+                    <select class="form-control form-control-solid" name="user_id">
+                        <option value="">--Select Company--</option>
+                        @foreach($company as $data)
+                        <option value="{{ $data->id }}" {{  $servicerequest->user_id == $data->id   ? 'selected' : '' }} >{{$data->name}}</option>
                         @endforeach
                     </select>
                 </div>
-        {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manger_id', 1) }}</label>
+
+    </div>
+    <div class="row mb-6">
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.manager_id', 1) }}</label>
         <div class="col-lg-4 fv-row">
-                {!! Form::text('manger_id', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.manger_id', 1)]) !!}
-        </div> --}}
+                {{-- {!! Form::text('manager', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.managers', 1)]) !!} --}}
+
+                <select name="manger_id"
+                                class="form-control form-control-solid">
+                                <option value="">--Select Manager--</option>
+                                @foreach($manager as $data)
+
+                                <option value="{{ $data->id }}" {{  $servicerequest->manger_id == $data->id   ? 'selected' : '' }} >{{$data->name}}</option>
+                                @endforeach
+                            </select>
+            </div>
+
+
     </div>
     <div class="row mb-6">
         {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.emp_id', 1) }}</label>
@@ -52,8 +71,7 @@
             <input type="file" name="pictures" class="form-control form-control-lg form-control-solid">
             @if($servicerequest->pictures)
             <img src="{{ url('/') }}/uploads/{{$servicerequest->pictures}}" style="width:50px; height:50px;" />
-            @else
-            <input type="file" name="pictures" class="form-control form-control-lg form-control-solid">
+
             @endif
         </div>
     </div>

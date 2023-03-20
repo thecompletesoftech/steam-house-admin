@@ -19,7 +19,10 @@ class ServiceRequest extends FormRequest
                 'Service_request' => 'required|max:150',
                 // 'pictures' => 'required',
                 'phone' => 'required|min:6|max:10|starts_with:1,2,3,4,5,6,7,8,9',
-                'discription' => 'required',
+
+                'user_id' => 'required',
+                'address' => 'required',
+                'manger_id'=>'required',
 
             ];
         } else {
@@ -27,7 +30,10 @@ class ServiceRequest extends FormRequest
                 'Service_request' => 'required|max:150',
                 // 'pictures' => 'required',
                 'phone' => 'required|numeric|min:6|max:10|starts_with:1,2,3,4,5,6,7,8,9',
-                'discription' => 'required',
+
+                'user_id' => 'required',
+                'address' => 'required',
+                'manger_id'=>'required',
 
             ];
         }
@@ -36,10 +42,13 @@ class ServiceRequest extends FormRequest
     public function messages()
     {
         return [
-            'Service_request.required' => __('validation.required', ['attribute' => 'company_name']),
+            'Service_request.required' => __('validation.required', ['attribute' => 'Request']),
             // 'pictures.required' => __('validation.required', ['attribute' => 'pictures']),
             'number.required' => __('validation.required', ['attribute' => 'number']),
-            'discription.required' => __('validation.required', ['attribute' => 'discription']),
+
+            'user_id.required' => __('validation.required', ['attribute' => 'Company']),
+            'address.required' => __('validation.required', ['attribute' => 'Location']),
+            'manger_id.required' => __('validation.required', ['attribute' => 'Manager']),
 
         ];
     }

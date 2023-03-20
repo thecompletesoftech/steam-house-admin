@@ -27,6 +27,7 @@ class ManagerRequest extends FormRequest
         if (!request()->is('admin/users/create')) {
             return [
                 //  'meter_id' => 'required|unique:users,meter_id',
+                'address'=>'required',
                 'username' => 'required|unique:users,username',
                 'name' => 'required|max:150',
                 'email' => 'required|email|unique:users,email',
@@ -43,6 +44,7 @@ class ManagerRequest extends FormRequest
         } else {
             return [
                 //  'meter_id' => 'required|unique:users,meter_id',
+                'address'=>'required',
                 'username' => 'unique:users,username',
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
@@ -69,6 +71,8 @@ class ManagerRequest extends FormRequest
             'phone.phone' => __('validation.phone', ['attribute' => 'Phone']),
             'phone.unique' => __('validation.unique', ['attribute' => 'Phone']),
             'meter_id.required' => __('validation.required', ['attribute' => 'Manager Id']),
+            'address.required' => __('validation.required', ['attribute' => 'Location']),
+
 
             'phone.required' => __('validation.required', ['attribute' => 'phone']),
             'password.required' => __('validation.required', ['attribute' => 'password']),

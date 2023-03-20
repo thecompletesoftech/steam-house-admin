@@ -9,7 +9,8 @@
        <select class="form-control form-control-solid" name="address">
            <option >--Select location--</option>
            @foreach($location as $data)
-           <option value="{{$data->location_id}}">{{$data->location}}</option>
+
+           <option value="{{ $data->location_id }}" {{  $user->address == $data->location_id   ? 'selected' : '' }} >{{$data->location}}</option>
    @endforeach
        </select>
    </div>
@@ -68,8 +69,7 @@
                 <input type="file" name="image" class="form-control form-control-lg form-control-solid">
                 @if($user->image)
                 <img src="{{ url('/') }}/uploads/{{$user->image}}" style="width:50px; height:50px;" />
-                @else
-                <input type="file" name="image" class="form-control form-control-lg form-control-solid">
+
                 @endif
             </div>
 

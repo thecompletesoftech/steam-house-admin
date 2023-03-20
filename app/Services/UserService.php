@@ -242,9 +242,13 @@ class UserService
 
     public static function delete_user($id){
         $result=DB::table('users')->where('id',$id)->delete();
+        $result1=DB::table('users')->where('manager_id',$id)->delete();
         $result1=DB::table('service_request')->where('emp_id',$id)->delete();
         return $result.$result1;
     }
+
+
+
 
 
     /**
@@ -278,6 +282,14 @@ class UserService
             DB::raw("(DATE_FORMAT(updated_at,'%d-%M-%Y')) as updated_date"),
         )->orderBy('created_at', 'desc');
         return $data;
+    }
+
+
+
+    public static function delete_company($id){
+        $result=DB::table('users')->where('id',$id)->delete();
+        $result1=DB::table('service_request')->where('user_id',$id)->delete();
+        return $result.$result1;
     }
 
     /**
