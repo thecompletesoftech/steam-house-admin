@@ -120,6 +120,7 @@ class ServicesRequestController extends Controller
     public function update(ServiceRequest $request, ServiceRequestModel $servicerequest)
     {
         $input = $request->except(['_method', '_token', 'proengsoft_jsvalidation']);
+
         if(!empty($input['pictures']))
         {
             $manager_image=$request->file('pictures');

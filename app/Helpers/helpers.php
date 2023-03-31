@@ -210,3 +210,26 @@ function getNameById($id)
 
     }
 
+
+    function getmanager()
+    {
+        $data = User::where('role',1)->count('id');
+        return $data;
+    }
+
+
+
+    function getcompany()
+    {
+        $data = User::where('role',0)->count('id');
+        return $data;
+    }
+
+
+
+    function getEngineer()
+    {
+        $data = User::where('role',2)->count('id');
+        return $data;
+    }
+

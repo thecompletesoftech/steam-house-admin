@@ -31,14 +31,10 @@ class ManagerRequest extends FormRequest
                 'username' => 'required|unique:users,username',
                 'name' => 'required|max:150',
                 'email' => 'required|email|unique:users,email',
-                'phone' => 'required|min:6|max:10|unique:users,phone|starts_with:1,2,3,4,5,6,7,8,9',
-
+                'phone' => 'required|numeric|digits:10|unique:users,phone|starts_with:1,2,3,4,5,6,7,8,9',
                 'password' => 'required',
                 'c_password' => 'same:password',
                 'role' => 'required',
-
-
-
             ];
 
         } else {
@@ -48,8 +44,7 @@ class ManagerRequest extends FormRequest
                 'username' => 'unique:users,username',
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
-                'phone' => 'required|min:6|max:10|unique:users,phone|starts_with:1,2,3,4,5,6,7,8,9',
-
+                'phone' => 'required|numeric|digits:10|unique:users,phone|starts_with:1,2,3,4,5,6,7,8,9',
                 'password' => 'required',
                 'c_password' => 'same:password',
                 'role' => 'required',
@@ -72,8 +67,6 @@ class ManagerRequest extends FormRequest
             'phone.unique' => __('validation.unique', ['attribute' => 'Phone']),
             'meter_id.required' => __('validation.required', ['attribute' => 'Manager Id']),
             'address.required' => __('validation.required', ['attribute' => 'Location']),
-
-
             'phone.required' => __('validation.required', ['attribute' => 'phone']),
             'password.required' => __('validation.required', ['attribute' => 'password']),
             'c_password.required' => __('validation.required', ['attribute' => 'confirm password']),

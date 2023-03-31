@@ -111,6 +111,8 @@ Breadcrumbs::resource('managerfeedbacks', $mls->messageLanguage('only_name', 'ma
 Breadcrumbs::resource('employeefeedbacks', $mls->messageLanguage('only_name', 'employeefeedback', 2));
 /*------------- Customer Tracking ------------------------*/
 Breadcrumbs::resource('customertrackings', $mls->messageLanguage('only_name', 'customertracking', 2));
+/*------------- Admin Notification ------------------------*/
+Breadcrumbs::resource('notifications', $mls->messageLanguage('only_name', 'notification', 2));
 
 /*------------- customerdatas ------------------------*/
 Breadcrumbs::resource('customerdatas', $mls->messageLanguage('only_name', 'customerdata', 2));

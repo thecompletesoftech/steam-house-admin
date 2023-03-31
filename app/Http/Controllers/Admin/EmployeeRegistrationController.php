@@ -137,6 +137,16 @@ class EmployeeRegistrationController extends Controller
 
         }
 
+        if(!empty($input['username']))
+        {
+
+            $newuser=User::where('username',$request->username)->get();
+            if(count($newuser)>0){
+                return redirect()->back()->withSuccess('Engineer Username Allready Exists!');
+            }
+
+    }
+
         $this->user->update($input,$user);
             return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'engineer', 1));
 

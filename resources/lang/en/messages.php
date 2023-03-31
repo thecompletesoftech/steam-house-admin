@@ -21,6 +21,7 @@ return [
     'company' => 'Company |Companys',
     'location' => 'Location |Locations',
     'service'=>'Service|Services',
+    'notification' => 'Notification|Notifications',
 
 
 

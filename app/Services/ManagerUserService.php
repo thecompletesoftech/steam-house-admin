@@ -32,6 +32,18 @@ class ManagerUserService
         return $data;
     }
 
+
+    public static function searchManager(Request $request)
+    {
+
+        $data = User::where('name', 'like', "%{$request->search}%")
+        ->orwhere('email', 'like', "%{$request->search}%")
+        ->orderBy('created_at', 'desc')->paginate(10);
+        return $data;
+
+    }
+
+
     public static function getById($id)
     {
         $data = User::find($id);
@@ -58,8 +70,11 @@ class ManagerUserService
         ->select('users.*','location.location')
         ->join('location','location.location_id','=','users.address',)
         ->where('role',1)
-        ->orderBy('users.created_at', 'desc')->get();
+        ->orderBy('users.created_at', 'desc')->paginate(10);
         return $data;
     }
+
+
+
 
 }

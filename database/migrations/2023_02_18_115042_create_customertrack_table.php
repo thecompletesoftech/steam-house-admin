@@ -18,7 +18,8 @@ return new class extends Migration
             $table->tinyInteger('Service_request_id')->nullable();
             $table->string('text');
             $table->tinyInteger('status')->default(0)->comment('0:pending,1:accept,2:complated');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

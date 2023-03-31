@@ -129,7 +129,7 @@
                     if (catId) {
                         $.ajax({
                             // url: '/admin/managerregistrations/locationdata/' + catId,
-                            url: '{{url('/admin/managerregistrations/locationdata')}}/' + catId,
+                            url: '{{url('/admin/managerregistrations/locationdata?cat_id=')}}/' + catId,
                             type: "GET",
                             dataType: "json",
                             alert("Data");

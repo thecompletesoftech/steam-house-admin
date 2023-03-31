@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name', 200)->nullable();
             $table->string('guard_name', 200)->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

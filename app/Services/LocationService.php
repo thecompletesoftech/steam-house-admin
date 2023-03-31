@@ -46,7 +46,7 @@ class LocationService
 
     public static function datatable()
     {
-        $data = DB::table('location')->orderBy('created_at', 'asc')->get();
+        $data = DB::table('location')->orderBy('created_at', 'asc')->paginate(10);
         return $data;
     }
 

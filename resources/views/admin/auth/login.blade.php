@@ -7,20 +7,26 @@
         <div class="d-flex flex-center flex-column flex-column-fluid p-10 pb-lg-20">
             <!--begin::Logo-->
             <a href="javascript:void(0)" class="mb-12">
-                <!-- <img alt="Logo" src="{{asset('admin/dist/media/logos/consultant.png')}}" class="h-90px" /> -->
-                <span style="font-size:10px;color:white;font-weight:400px;">Steam House</span>
+                <img alt="Logo" src="{{asset('admin/dist/media/logos/steamlogo.png')}}" class="h-90px"  />
+                {{-- <span style="font-size:10px;color:white;font-weight:400px;">Steam House</span> --}}
             </a>
             <!--end::Logo-->
             <!--begin::Wrapper-->
+
             <div class="w-lg-500px bg-body rounded shadow-sm p-10 p-lg-15 mx-auto">
+
+
 
                 <!--begin::Form-->
                 <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form" method="POST"
                     action="{{ route('admin.login') }}">
+
                     @csrf
+
                     <!--begin::Heading-->
                     <div class="text-center mb-10">
                         <!--begin::Title-->
+
                         <h1 class="text-dark mb-3">Sign In  </h1>
                         <!--end::Title-->
                         <!--begin::Link-->
@@ -38,7 +44,7 @@
                         <!--end::Label-->
                         <!--begin::Input-->
                         <input class="form-control form-control-lg form-control-solid" type="text" name="email"
-                            autocomplete="on" value="anilv4481@gmail.com" />
+                            autocomplete="on" value="steamhouse@gmail.com" />
                         <!--end::Input-->
                     </div>
                     <!--end::Input group-->
@@ -56,7 +62,7 @@
                         <!--end::Wrapper-->
                         <!--begin::Input-->
                         <input class="form-control form-control-lg form-control-solid" type="password" name="password"
-                            autocomplete="on" value="Anilv4481" />
+                            autocomplete="on" value="steam@123" />
                         <!--end::Input-->
                     </div>
                     <!--end::Input group-->

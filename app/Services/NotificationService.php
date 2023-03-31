@@ -14,13 +14,14 @@ class NotificationService
      */
     public static function create(array $data)
     {
+       
         $data = Notification::create($data);
+        
         $notification = [
-            "id" => $data->agora_id,
+            "id" => $data->user_id,
             "notification" => [
                 "title" => $data->notification,
                 "body" => $data->message],
-               
         ];
 
          $notification = HelperService::sendNotification($notification);
@@ -110,7 +111,7 @@ class NotificationService
     public static function datatable()
     {
       
-        $data = Notification::where('agora','0')->orderBy('created_at', 'desc')->paginate(10);
+        $data = Notification::orderBy('created_at', 'desc')->paginate(10);
         
         return $data;
     }

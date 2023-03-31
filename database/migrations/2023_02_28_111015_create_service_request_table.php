@@ -28,7 +28,8 @@ return new class extends Migration
             $table->string('longitude')->nullable();
             $table->string('address')->nullable();
             $table->tinyInteger('status')->default(0)->comment('0:pending,1:assigned,2:inprocess,3:complated');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
         });
     }
 

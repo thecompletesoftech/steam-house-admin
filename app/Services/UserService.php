@@ -194,6 +194,22 @@ class UserService
 
     }
 
+
+
+
+    public static function company_search(Request $request)
+    {
+
+
+        $data = User::
+        where('name', 'like', "%{$request->search}%")
+        ->orwhere('email', 'like', "%{$request->search}%")
+        ->orderBy('created_at', 'desc')->whereNotIn("name", ['Admin'])->paginate(10);
+        return $data;
+
+    }
+
+
     public static function update_password(User $user, String $password,)
     {
 

@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('service_process')->nullable();
             $table->string('solve_by_engineer')->nullable();
             $table->string('service_closed')->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

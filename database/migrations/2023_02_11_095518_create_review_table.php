@@ -17,7 +17,8 @@ return new class extends Migration
             $table->increments('id');
             $table->string('star');
             $table->string('discription');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

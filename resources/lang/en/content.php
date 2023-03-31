@@ -83,6 +83,9 @@ return [
         'total_vendors' => 'Total Vendors',
         'weekly_sales' => 'Weekly Sales',
         'yearly_sales' => 'Yearly Sales',
+        'manager' => 'Total Manager',
+        'total_company' => 'Total Company',
+        'total_engineer' => 'Total Engineer',
 
         'item_count' => 'Item Count',
         'total_vendors' => 'Total Vendors',
@@ -139,6 +142,8 @@ return [
     'email_status' => 'Email Status|Email Status',
     'phone_status' => 'Phone Status|Phone Status',
     'status' => 'Status|Status',
+    'notification' => 'Notification|Notifications',
+
 
     'action_title' => 'Action|Actions',
     'create_title' => 'Create',
@@ -212,6 +217,7 @@ return [
     'addplace' => 'AddPlace|AddPlaces',
     'book' => 'Book|Books',
     'contactus' => 'Contact Us|Contact Us',
+    'notification' => 'Notification|Notifications',
 
 
     'user_id' => 'User Id',
@@ -225,6 +231,8 @@ return [
     'icon_title' => 'Icon',
 
 
+    'title_name'=>'Title',
+    'message_title'=>'Message',
 
 
     'open_title' => 'Open',

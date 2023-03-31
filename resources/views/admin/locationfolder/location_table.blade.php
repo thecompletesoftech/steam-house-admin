@@ -34,3 +34,9 @@
   </tr>
   @endforeach
 </table>
+
+<div class="row">
+    <div class="col-lg-12">
+        {{ $location->links() }}
+    </div>
+</div>

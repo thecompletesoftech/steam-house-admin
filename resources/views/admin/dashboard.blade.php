@@ -25,15 +25,16 @@
                                     <div class="col bg-light-primary px-6 py-8 rounded-2 me-7 mb-7">
                                         <!--begin::Svg Icon | path: icons/duotone/Communication/Add-user.svg-->
                                         <span class="svg-icon svg-icon-3x svg-icon-primary d-block my-2"  >
-                                           <i class="fa fa-user" style="font-size: 25px;color:black;"></i>
-                                           <!-- <img alt="Logo" src="{{asset('admin/dist/media/logos/adventureboy.png')}}" class="h-90px" height="20" width="20" />  -->
-                                           <h4 class="text-dark fw-bold fs-6"><span class="new_users">0</span>
-                                            </h4>
+                                           <i class="fa fa-user" style="font-size: 25px;color:gray;"></i>
+
+
                                         </span>
                                         <!--end::Svg Icon-->
+                                        <h4 class="text-dark fw-bold fs-6"  style="margin-top:10px;" ><span>{{getmanager()}}</span>
+                                        </h4>
 
                                         <a href=" {{ route('admin.users.index') }}"
-                                            class="text-primary fw-bold fs-6">{{ trans_choice('content.dashboard_cards.new_users', 1) }}</a>
+                                            class="text-primary fw-bold fs-6">{{ trans_choice('content.dashboard_cards.manager', 1) }}</a>
                                     </div>
                                     <!--end::Col-->
 
@@ -43,19 +44,21 @@
                                     <div class="col bg-light-success px-6 py-8 rounded-2 me-7 mb-7">
                                         <!--begin::Svg Icon | path: icons/duotone/Media/Equalizer.svg-->
                                         <span class="svg-icon svg-icon-3x svg-icon-success d-block my-2" >
-                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                            {{-- <svg xmlns="http://www.w3.org/2000/svg"
                                                 xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
                                                 viewBox="0 0 24 24" version="1.1">
                                                 <path
                                                     d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z"
                                                     fill="#000000" />
-                                            </svg>
-                                            <h4 class="text-dark fw-bold fs-6 "><span class="total_vendors">0</span>
+                                            </svg> --}}
+                                            <i class="fa fa-building" style="font-size:25px;color:gray;"></i>
+
+                                            <h4 class="text-dark fw-bold fs-6 "  style="margin-top:10px;"><span >{{getcompany()}}</span>
                                             </h4>
                                         </span>
                                         <!--end::Svg Icon-->
                                         <a href="#"
-                                            class="text-success fw-bold fs-6">{{ trans_choice('content.dashboard_cards.total_vendors', 1) }}</a>
+                                            class="text-success fw-bold fs-6">{{ trans_choice('content.dashboard_cards.total_company', 1) }}</a>
                                     </div>
                                     <!--end::Col-->
 
@@ -63,21 +66,14 @@
                                     <div class="col bg-light-primary px-6 py-8 rounded-2 mb-7">
                                         <!--begin::Svg Icon | path: icons/duotone/Communication/Add-user.svg-->
                                         <span class="svg-icon svg-icon-3x svg-icon-primary d-block my-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
-                                                viewBox="0 0 24 24" version="1.1">
-                                                <!-- <path d="M18,8 L16,8 C15.4477153,8 15,7.55228475 15,7 C15,6.44771525 15.4477153,6 16,6 L18,6 L18,4 C18,3.44771525 18.4477153,3 19,3 C19.5522847,3 20,3.44771525 20,4 L20,6 L22,6 C22.5522847,6 23,6.44771525 23,7 C23,7.55228475 22.5522847,8 22,8 L20,8 L20,10 C20,10.5522847 19.5522847,11 19,11 C18.4477153,11 18,10.5522847 18,10 L18,8 Z M9,11 C6.790861,11 5,9.209139 5,7 C5,4.790861 6.790861,3 9,3 C11.209139,3 13,4.790861 13,7 C13,9.209139 11.209139,11 9,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" /> -->
-                                                <!-- <path d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z" fill="#000000" fill-rule="nonzero" /> -->
-                                                <path
-                                                    d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2z"
-                                                    fill="#000000" fill-rule="nonzero" />
-                                            </svg>
-                                            <h4 class="text-dark fw-bold fs-6"><span class="total_purchase">0</span>
+                                         <i class="fa fa-users" style="font-size:25px;color:gray;"></i>
+                                            <h4 class="text-dark fw-bold fs-6"  style="margin-top:10px;"><span >{{getEngineer()}}</span>
                                             </h4>
                                         </span>
                                         <!--end::Svg Icon-->
 
                                         <a href="#"
-                                            class="text-primary fw-bold fs-6">{{ trans_choice('content.dashboard_cards.total_purchase', 1) }}</a>
+                                            class="text-primary fw-bold fs-6">{{ trans_choice('content.dashboard_cards.total_engineer', 1) }}</a>
                                     </div>
                                     <!--end::Col-->
 

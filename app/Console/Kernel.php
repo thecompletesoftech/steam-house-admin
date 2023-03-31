@@ -13,9 +13,22 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
+
+     protected $commands = [
+        \App\Console\Commands\Livedata::class,
+];
+
+
+
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        // $schedule->call('App\Http\Controllers\Api\V1\Customer\AuthController@login')->cron('*');
+        $schedule->command('livedata:livedata')
+             ->everyMinutes();
+
+
+
     }
 
     /**

@@ -65,12 +65,25 @@ class CompanyListController extends Controller
 
         $items = $this->user->datatable();
 
-        if($request->ajax())
-        {
-            return view('admin.companylistfolder.company_table',['user'=>$items]);
-        } else {
-            return view('admin.companylistfolder.index',['user'=>$items]);
+        // if($request->ajax())
+        // {
+        //     return view('admin.companylistfolder.company_table',['user'=>$items]);
+        // } else {
+        //     return view('admin.companylistfolder.index',['user'=>$items]);
+        // }
+
+        if (!empty($request['search'])) {
+
+
+            $items=UserService::company_search($request);
+
+            if(count($items)>0){
+                return view('admin.companylistfolder.index',['user'=>$items,'search'=>$request->search]);
+            }
+                return redirect()->back()->withSuccess('Search Data Not Found');
         }
+        return view('admin.companylistfolder.index',['user'=>$items,'search'=>$request->search]);
+
 
     }
 
@@ -141,6 +154,18 @@ class CompanyListController extends Controller
         {
             $input['password']=Hash::make($request->password);
         }
+
+
+        if(!empty($input['username']))
+        {
+
+            $newuser=User::where('username',$request->username)->get();
+            if(count($newuser)>0){
+                return redirect()->back()->withSuccess('Company Username Allready Exists!');
+            }
+
+    }
+
 
 
         $this->user->update($input,$user);

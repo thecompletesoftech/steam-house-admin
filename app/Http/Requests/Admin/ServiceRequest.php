@@ -18,8 +18,7 @@ class ServiceRequest extends FormRequest
             return [
                 'Service_request' => 'required|max:150',
                 // 'pictures' => 'required',
-                'phone' => 'required|min:6|max:10|starts_with:1,2,3,4,5,6,7,8,9',
-
+                'phone' => 'required|numeric|digits:10|starts_with:1,2,3,4,5,6,7,8,9',
                 'user_id' => 'required',
                 'address' => 'required',
                 'manger_id'=>'required',
@@ -29,8 +28,7 @@ class ServiceRequest extends FormRequest
             return [
                 'Service_request' => 'required|max:150',
                 // 'pictures' => 'required',
-                'phone' => 'required|numeric|min:6|max:10|starts_with:1,2,3,4,5,6,7,8,9',
-
+                'phone' => 'required|numeric|digits:10|starts_with:1,2,3,4,5,6,7,8,9',
                 'user_id' => 'required',
                 'address' => 'required',
                 'manger_id'=>'required',

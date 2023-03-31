@@ -30,14 +30,12 @@ class EmployeesRequest extends FormRequest
                 'username' => 'required|max:150|unique:users,username',
                 'name' => 'required|max:150',
                 'email' => 'required|email|unique:users,email',
-                'phone' => 'required|number|max:10|unique:users,phone',
+                'phone' => 'required|numeric|digits:10|unique:users,phone|starts_with:1,2,3,4,5,6,7,8,9',
                 'address'=>'required',
                 'manager_id'=>'required',
                 'password' => 'required',
                 'c_password' => 'required_with:password|same:password',
                 'role' => 'required',
-
-
 
             ];
 
@@ -47,7 +45,7 @@ class EmployeesRequest extends FormRequest
                 'username' => 'unique:users,username',
                 'name' => 'required',
                 'email' => 'required|email|unique:users,email',
-                'phone' => 'required|number|max:10|unique:users,phone',
+                'phone' => 'required|numeric|digits:10|unique:users,phone|starts_with:1,2,3,4,5,6,7,8,9',
                 'address'=>'required',
                 'manager_id'=>'required',
                 'password' => 'required',

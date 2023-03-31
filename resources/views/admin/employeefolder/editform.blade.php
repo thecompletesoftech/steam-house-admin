@@ -58,9 +58,15 @@
             {!! Form::text('email', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.registration_email', 1)]) !!}
         </div>
 
-        <label class="col-lg-2 col-form-label required fw-bold fs-6">Username</label>
+        {{-- <label class="col-lg-2 col-form-label required fw-bold fs-6">Username</label>
         <div class="col-lg-4 fv-row">
             {!! Form::text('username', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.username', 1)]) !!}
+        </div> --}}
+
+        <label class="col-lg-2 col-form-label required fw-bold fs-6">{{ trans_choice('content.company_username', 1) }}</label>
+        <div class="col-lg-4 fv-row">
+
+            <input type="text" class="form-control form-control-lg form-control-solid" value="{{$user->username}}" readonly>
         </div>
 
     </div>

@@ -16,7 +16,7 @@ use App\Services\UtilityService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
-
+use Log;
 
 
 
@@ -66,13 +66,17 @@ class ManagerRegistrationController extends Controller
 
         $items = $this->user->datatable();
 
-        if($request->ajax())
-        {
-            return view('admin.managerfolder.manager_table',['user'=>$items]);
-        } else {
-            return view('admin.managerfolder.index',['user'=>$items]);
-        }
+        if (!empty($request['search'])) {
 
+            $items=UserService::user_search($request);
+
+            if(count($items)>0){
+
+                return view('admin.managerfolder.index',['user'=>$items,'search'=>$request->search]);
+            }
+                return redirect()->back()->withSuccess('Search Data Not Found');
+        }
+        return view('admin.managerfolder.index',['user'=>$items,'search'=>$request->search]);
     }
 
 
@@ -141,6 +145,16 @@ class ManagerRegistrationController extends Controller
 
     $input['password']=Hash::make($request->password);
     }
+
+//     if(!empty($input['username']))
+//     {
+
+//         $newuser=User::where('username',$request->username)->get();
+//         if(count($newuser)>0){
+//             return redirect()->back()->with('Username Allready Exists!');
+//         }
+
+// }
 
 
 

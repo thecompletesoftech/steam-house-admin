@@ -4,6 +4,7 @@ namespace App\Services\Api;
 use App\Http\Requests\Admin\ContactUsRequest;
 use App\Models\MasterOtp;
 use App\Models\User;
+use App\Models\Livedata;
 use App\Models\PasswordReset;
 use App\Models\UserIntrest;
 use App\Models\Adventure;
@@ -33,6 +34,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\DB;
+use Artisan;
 
 class AuthService
 {
@@ -81,6 +83,7 @@ class AuthService
 
         if (!$token) {
             if ($user->status == 1) {
+
                 return response()->json(
                     [
                         'status' => false,
@@ -110,10 +113,15 @@ class AuthService
 
         if ($user->status == 0) {
             // UserService::updateLastLogin($user->id, $request);
-            //     if(!empty($request->fcm_token)){
-            // $data=array('fcm_token'=>$request->fcm_token);
-            // $result=DB::table('users')->where('email', $request->email)->update($data);
-            //     }
+                if(!empty($request->fcm_token)){
+            $data=array('fcm_token'=>$request->fcm_token);
+
+            $result=DB::table('users')->where('username', $request->username)->update($data);
+
+
+        }
+
+        Artisan::call('livedata:livedata');
                 return response()->json(
                 [
                     'status' => true,
@@ -789,7 +797,7 @@ public static function verifyOtp(Request $request)
 
 
 
-    public static function logout(Request $request)
+    public static function logouttest(Request $request)
     {
         self::getAuthUser();
         JWTAuth::invalidate(JWTAuth::getToken());
@@ -799,10 +807,29 @@ public static function verifyOtp(Request $request)
         ]);
     }
 
-    public static function getAuthUser()
+    public static function getAuthUsertest()
     {
         return JWTAuth::parseToken()->authenticate();
     }
+
+
+    public static function steamlogout(Request $request)
+    {
+        self::steamAuth();
+        JWTAuth::invalidate(JWTAuth::getToken());
+        return response()->json([
+            'status' => true,
+            'message' => 'Successfully logged out'
+        ]);
+    }
+
+    public static function steamAuth()
+    {
+        return JWTAuth::parseToken()->authenticate();
+    }
+
+
+
 // ----------------------------------------------------------------------------------------------
 
 
@@ -969,7 +996,13 @@ public static function verifyOtp(Request $request)
                 'longitude' => $request->longitude,
                 'address' => $request->address,
                 'status' => $request->status,
+
+
                 'otp' => $request->otp,
+                'created_at' => Carbon::now(),
+
+                'updated_at' => Carbon::now()
+
                 ];
 
                 // if(!empty($input['emp_id'])){
@@ -992,7 +1025,7 @@ public static function verifyOtp(Request $request)
                 $track =
                 [
                 'Service_request_id' => $servicerequest->id,
-                'text' => "Ticket Generated,"."$userss->name,"."$location->location,"."$userss->phone,",
+                'text' => "Ticket Generated,"."$userss->name,"."$userss->phone,",
                 'status'=>"2",
                 'created_at'=>date('Y-m-d H:i:s'),
 
@@ -1052,7 +1085,7 @@ public static function verifyOtp(Request $request)
                     //         }
                     // 'pictures' => $request->pictures,
 
-                    $data->otp = DB::table('master_otps')->where('User_id',$data->id)->get();
+                    // $data->otp = DB::table('master_otps')->where('User_id',$data->id)->get();
                     $data->managerfeedback = DB::table('managerfeedback')->where('manager_feedback_id',$data->id)->get();
                     $data->customerfeedback = DB::table('customerfeedback')->where('customer_feedback_id',$data->id)->get();
                 }
@@ -1127,7 +1160,8 @@ public static function verifyOtp(Request $request)
         }
         // list by ManagerID
         public static function ServiceRequestBYManagerID(Request $request){
-            $status=ServiceRequestModel::where('manger_id',$request->ManagerID)->orderBy('id', 'DESC')->get();
+            $status=DB::table('service_request')->where('manger_id',$request->ManagerID)->orderBy('id', 'DESC')->get();
+
              foreach($status as $data)
              {
 
@@ -1143,8 +1177,9 @@ public static function verifyOtp(Request $request)
                  $data->employeefeedback = DB::table('employee_feedback')->where('employee_id',$data->emp_id)->where('Service_request_id',$data->id)->get();
              }
              // if (!empty($status))
-             if (count($status)>0)
+             if (!empty($status))
              {
+
                  return response()->json(
                      [
                          'status' => true,
@@ -1171,7 +1206,8 @@ public static function verifyOtp(Request $request)
 
             if($request->EmpId!='')
             {
-            $status =ServiceRequestModel::where('emp_id',$request->EmpId)->orderBy('id', 'DESC')->get();
+
+            $status=DB::table('service_request')->where('emp_id',$request->EmpId)->orderBy('id', 'DESC')->get();
 
             foreach($status as $data){
 
@@ -1187,7 +1223,7 @@ public static function verifyOtp(Request $request)
 
 
             }
-            if (count($status)>0)
+            if (!empty($status))
             {
                 return response()->json(
                     [
@@ -1509,9 +1545,10 @@ public static function verifyOtp(Request $request)
             public static function trackingstatuslistapi(Request $request){
 
                 // $status = DB::table('customertrack')->get();
-                 $status=TrackingModel::where('Service_request_id',$request->Service_request_id)->orderBy('created_at', 'desc')->get();
+                 $status=DB::table('customertrack')->where('Service_request_id',$request->Service_request_id)->orderBy('created_at', 'desc')->get();
 
-                if (count($status)>0)
+
+                 if (!empty($status))
                 {
                     return response()->json(
                         [
@@ -1685,10 +1722,10 @@ public static function verifyOtp(Request $request)
                     $feedback = ServiceRequestModel::where('id',$request->Service_request_id)->update($service_status);
 
 
-                    if(count($service_request)>0){
-                    }else{
-                        $tracking = TrackingModel::create($track);
-                    }
+                    // if(count($service_request)>0){
+                    // }else{
+                    //     $tracking = TrackingModel::create($track);
+                    // }
                 // $track =
                 // [
                 // 'Service_request_id' => $Service_request_id->id,
@@ -2174,6 +2211,33 @@ public static function verifyOtp(Request $request)
                         200
                     );
                 }
+        }
+
+
+        public static function livedata(){
+
+            $livedata = DB::table('livedata')->get();
+
+            if (!empty($livedata))
+            {
+                return response()->json(
+                    [
+                        'status' => true,
+                        'message' => 'Data Find successfully',
+                        'data' => $livedata
+                    ],
+                    200
+                );
+            } else {
+                return response()->json(
+                    [
+                        'status' => false,
+                        'message' => 'Data not Found',
+                        'data' =>[],
+                    ],
+                    200
+                );
+            }
         }
 
 

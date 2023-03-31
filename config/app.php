@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Kolkata',
 
     /*
     |--------------------------------------------------------------------------
@@ -166,7 +166,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
 
         Barryvdh\DomPDF\ServiceProvider::class,
-        
+
         /*
          * Package Service Providers...
          */
@@ -204,7 +204,7 @@ return [
         'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'HelperService' => App\Services\HelperService::class,
-        
+
         'PDF' => Barryvdh\DomPDF\Facades::class,
         // 'JWTAuth'=>Tymon\JWTAuth\Facades\JWTAuth::class,
         // 'JWTFactory'=>Tymon\JWTAuth\Facades\JWTFactory::class,

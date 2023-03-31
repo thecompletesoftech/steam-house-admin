@@ -19,7 +19,8 @@ return new class extends Migration
             $table->integer('customer_feedback_id')->nullable();
             $table->string('star');
             $table->string('discription');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('Service_request_id')->nullable();
             $table->integer('manager_feedback_id')->nullable();
             $table->string('discription');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

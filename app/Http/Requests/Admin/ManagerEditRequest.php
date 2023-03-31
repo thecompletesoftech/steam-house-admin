@@ -30,9 +30,9 @@ class ManagerEditRequest extends FormRequest
                 // 'username' => 'required|unique:users,username',
                 // 'name' => 'required|max:150',
                 // 'email' => 'required|email|unique:users,email',
-                // 'phone' => 'max:10|starts_with:1,2,3,4,5,6,7,8,9',
+                'phone' => 'max:10|digits:10',
                 // 'about' => 'required',
-                // 'password' => 'required',    
+                // 'password' => 'required',
                 'c_password' => 'same:password',
                 // 'role' => 'required',
 
@@ -43,10 +43,10 @@ class ManagerEditRequest extends FormRequest
         } else {
             return [
                 //  'meter_id' => 'required|unique:users,meter_id',
-                // 'username' => 'unique:users,username',
+                // 'username' => 'required|unique:users,username',
                 // 'name' => 'required',
                 // 'email' => 'required|email|unique:users,email',
-                // 'phone' => 'max:10|starts_with:1,2,3,4,5,6,7,8,9',
+                'phone' => 'max:10|digits:10',
                 // 'about' => 'required',
                 // 'password' => 'required',
                 'c_password' => 'same:password',

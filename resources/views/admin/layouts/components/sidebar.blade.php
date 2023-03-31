@@ -19,10 +19,10 @@
         <div class="aside-logo flex-column-auto" id="kt_aside_logo">
             <!--begin::Logo-->
             <a href="javascript:void(0)" style="text-decoration: none;">
-                <!-- <img alt="Logo"
-                    src="{{asset('/admin/dist/media/logos/consultant.png')}}"
-                    class="h-55px logo" /> -->
-                  <span style="font-size:20px;color:white;font-weight:400px;">Steam House</span>
+                 <img alt="Logo"
+                    src="{{asset('admin/dist/media/logos/steamlogo.png')}}"
+                    class="h-55px logo" />
+                  {{-- <span style="font-size:20px;color:white;font-weight:400px;">Steam House</span> --}}
                 </a>
             <!--end::Logo-->
             <!--begin::Aside toggler-->
@@ -250,6 +250,22 @@
                         <span class="menu-title">Service Request</span>
                     </a>
                 </div>
+
+    <div class="menu-item">
+                        <a class="menu-link {{ checkActiveSideBar(['notifications']) ? 'menu-item active' : '' }}"
+                            href="{{ route('admin.notifications.index') }}">
+                            <span class="menu-icon">
+
+                                <span class="svg-icon svg-icon-2">
+                                    <i class="fas fa-comment"></i>
+
+                                </span>
+
+                            </span>
+                            <span class="menu-title">Notification</span>
+                        </a>
+                    </div>
+
 
                     {{-- <div class="menu-item">
                         <a class="menu-link {{ checkActiveSideBar(['customerdata']) ? 'menu-item active' : '' }}"

@@ -124,8 +124,13 @@ Route::controller(SteamHouseController::class)->group(function () {
         });
         Route::resource('/employeeregistrations',EmployeeRegistrationController::class);
 
+//Notification
 
-
+Route::controller(NotificationController::class)->group(function () {
+    Route::get('/notifications/status/{id}/{status}', 'status')->name('notifications.status');
+    Route::get('/notifications/destroy/{id}/', 'destroy')->name('notifications.destroy');
+});
+Route::resource('/notifications', NotificationController::class);
 
 
     // Services Request

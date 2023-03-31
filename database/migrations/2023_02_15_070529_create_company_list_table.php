@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('manager_id');
             $table->string('company_name');
             $table->string('location');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

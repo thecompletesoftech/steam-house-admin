@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('rating', 200)->nullable();
             $table->string('review', 200)->nullable();
             $table->string('date', 200)->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

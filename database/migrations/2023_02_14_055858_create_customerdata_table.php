@@ -21,7 +21,8 @@ return new class extends Migration
             $table->string('temprature');
             $table->string('totalizer');
             // $table->string('Last_reading_time');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 

@@ -120,6 +120,11 @@ class AuthController extends Controller
         return $this->apiratingService->listBook($request);
     }
 
+
+
+
+
+
      /**
      * Send Otp
      *
@@ -307,7 +312,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        return $this->apiAuthService->logout($request);
+        return $this->apiAuthService->steamlogout($request);
     }
 
 
@@ -395,6 +400,13 @@ public function UserList()
     {
         return $this->apiAuthService->locationsapiadd($request);
     }
+
+
+       //list
+       public function livedata()
+       {
+           return $this->apiAuthService->livedata();
+       }
 
 // Company List
     //list

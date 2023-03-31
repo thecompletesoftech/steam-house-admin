@@ -28,18 +28,34 @@ class CompanyListService
 
     public static function updateById(array $data, $id)
     {
-
-
         $data = User::whereId($id)->update($data);
 
         return $data;
     }
+
+
+    public static function company_search(Request $request)
+    {
+
+
+        $data = User::
+        where('name', 'like', "%{$request->search}%")
+        ->orwhere('email', 'like', "%{$request->search}%")
+        ->orderBy('created_at', 'desc')->whereNotIn("name", ['Admin'])->paginate(10);
+        return $data;
+
+    }
+
 
     public static function getById($id)
     {
         $data = User::find($id);
         return $data;
     }
+
+
+
+
 
     public static function delete(User $user)
     {
@@ -65,7 +81,7 @@ class CompanyListService
         $data = DB::table('users')
         ->select('users.*','users.id as id','location.location as address',)
         ->join('location','location.location_id','=','users.address')
-        ->orderBy('users.created_at', 'desc')->where('role','0')->get();
+        ->orderBy('users.created_at', 'desc')->where('role','0')->paginate(10);
         return $data;
     }
 

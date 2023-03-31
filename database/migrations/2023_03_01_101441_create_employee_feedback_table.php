@@ -19,7 +19,8 @@ return new class extends Migration
             $table->integer('employee_id')->nullable();
             $table->string('pictures');
             $table->string('remark');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
 
