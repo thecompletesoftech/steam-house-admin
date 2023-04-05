@@ -95,11 +95,10 @@ class NotificationController extends Controller
 
         foreach($data as $datas){
             $input['user_id']=$datas->id;
-
             $battle = $this->notificationService->create($input);
             }
 
-           
+
 
 
         return redirect()->route($this->index_route_name)

@@ -134,26 +134,9 @@ class ServicesRequestController extends Controller
 
     public function destroy($id)
     {
-
-        $result=DB::table('service_request')->where('id', $id)->delete();
+        $result=UserService::delete_service_request($id);
 
         return redirect()->back()->withSuccess('Data Delete Successfully!');
-
-        if ($result) {
-            return response()->json([
-                'status' => 1,
-                'title' => $this->mls->onlyNameLanguage('deleted_title'),
-                'message' => $this->mls->onlyNameLanguage('servicerequest delete'),
-                'status_name' => 'success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'title' => $this->mls->onlyNameLanguage('deleted_title'),
-                'message' => $this->mls->onlyNameLanguage('servicerequest delete'),
-                'status_name' => 'error'
-            ]);
-        }
 
     }
 

@@ -38,6 +38,16 @@ class LocationService
         return $data;
     }
 
+    public static function deleteLocation($id){
+        $result=DB::table('location')->where('location_id',$id)->delete();
+        $result1=DB::table('users')->where('address',$id)->delete();
+        $result2=DB::table('service_request')->where('address',$id)->delete();
+        return $result.$result1.$result2;
+    }
+
+
+
+
     public static function deleteById($id)
     {
         $data = LocationModel::whereId($id)->delete();

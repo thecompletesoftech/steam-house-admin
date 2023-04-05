@@ -114,25 +114,8 @@ class LocationController extends Controller
     public function destroy($id)
     {
 
-        $result=DB::table('location')->where('location_id', $id)->delete();
-
+        $result=LocationService::deleteLocation($id);
         return redirect()->back()->withSuccess('Location Delete Successfully!');
-
-        if ($result) {
-            return response()->json([
-                'status' => 1,
-                'title' => $this->mls->onlyNameLanguage('deleted_title'),
-                'message' => $this->mls->onlyNameLanguage('Location delete'),
-                'status_name' => 'success'
-            ]);
-        } else {
-            return response()->json([
-                'status' => 0,
-                'title' => $this->mls->onlyNameLanguage('deleted_title'),
-                'message' => $this->mls->onlyNameLanguage('Location delete'),
-                'status_name' => 'error'
-            ]);
-        }
 
     }
 

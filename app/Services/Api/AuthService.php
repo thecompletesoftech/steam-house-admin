@@ -2012,77 +2012,74 @@ public static function verifyOtp(Request $request)
                         }
             }
             // update
-        public static function employeeupdateapi(Request $request,$id)
-        {
 
+            public static function editProfile(Request $request)
+            {
 
-                 $input=array();
-                //  if(!empty($request->manager_id))
-                //  {
-                //  $input['manager_id']=$request->manager_id;
-                //  }
+                $request->validate([
+                    'old_password' => '',
 
-                //  if(!empty($request->location_id))
-                //  {
-                //  $input['location_id']=$request->location_id;
-                //  }
-
-                 if(!empty($request->manager))
-                 {
-                 $input['manager']=$request->manager;
-                 }
-
-                 if(!empty($request->location))
-                 {
-                 $input['location']=$request->location;
-                 }
-
-                 if(!empty($request->emo_name))
-                 {
-                 $input['emo_name']=$request->emo_name;
-                 }
-                 if(!empty($input['emp_img'])){
-                    $emp_img=FileService::ImageUploader($request,'emp_img','employees/image/');
-                    $input['emp_img']= json_encode($emp_img);
-                  }
-                 if(!empty($request->emo_expert))
-                 {
-                $input['emo_expert']=$request->emo_expert;
-                 }
-                 if(!empty($request->emo_contact))
-                 {
-                $input['emo_contact']=$request->emo_contact;
-                 }
-
-
-            //   $updatedata = CustomerDataModel::where('id',auth()->user()->id)->update($input);
-                // $updatedata = CustomerDataModel::where('id',auth()->user()->id)->update($input);
-                // $updatedata = DB::table('customerdata')->whereId($id)->update($input);
-                $updatedata = DB::table('employees')->where('emp_id',$id)->update($input);
+                ]);
 
 
 
-                if ($updatedata)
-                {
-                    return response()->json(
-                        [
-                            'status' => true,
-                            'message' => 'Profile Update Successfully'
+                     $input=array();
+                     if(!empty($request->name)){
+                     $input['name']=$request->name;
+                     }
+                     if(!empty($request->phone)){
+                     $input['phone']=$request->phone;
+                     }
 
-                        ],
-                        200
-                    );
-                } else {
-                    return response()->json(
-                        [
-                            'status' => false,
-                            'message' => 'Profile not Updated',
-                            'data' =>[],
-                        ],
-                        200
-                    );
-                }
-        }
+
+
+                     if(!empty($request->old_password)){
+
+                        if(!Hash::check($request->old_password, auth()->user()->password)){
+                            // return back()->with("error", "Old Password Doesn't match!");
+                            return response()->json(
+                                [
+                                    'status' => false,
+                                    'message' => "Old Password Doesn't match!'"
+
+                                ],
+                                200
+                            );
+                        }
+
+
+                            $input['password'] = Hash::make($request->new_password);
+
+                    }
+
+
+
+
+
+
+
+                    $result = User::where('id',auth()->user()->id)->update($input);
+                    if ($result) {
+                        return response()->json(
+                            [
+                                'status' => true,
+                                'message' => 'Profile Update Successfully'
+
+                            ],
+                            200
+                        );
+                    } else {
+                        return response()->json(
+                            [
+                                'status' => false,
+                                'message' => 'Profile not Updated',
+                                'data' =>[],
+                            ],
+                            200
+                        );
+                    }
+            }
+
 
  //Customer Data (Live DAta)
             //list

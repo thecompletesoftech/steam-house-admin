@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Livedata extends Command
 {
@@ -35,7 +36,10 @@ class Livedata extends Command
 
             $input = [
 
-                "livedata"=>$livedata,
+                'livedata'=>$livedata,
+                'created_at' => Carbon::now(),
+
+                'updated_at' => Carbon::now()
             ];
 
                 $updatedata=DB::table('livedata')->where('id',1)->update($input);

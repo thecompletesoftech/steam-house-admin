@@ -156,7 +156,7 @@ class EmployeeRegistrationController extends Controller
     public function destroy($id)
     {
 
-        $result=UserService::delete_user($id);
+        $result=UserService::delete_employee($id);
 
         return redirect()->back()->withSuccess('Data Delete Successfully!');
 

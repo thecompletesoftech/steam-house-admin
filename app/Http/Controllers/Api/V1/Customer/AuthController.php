@@ -174,6 +174,20 @@ class AuthController extends Controller
     }
 
 
+      /**
+     * Update User Profile
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function editProfile(Request $request)
+    {
+
+        return $this->apiAuthService->editProfile($request);
+    }
+
+
+
 
      /**
      * Update  Status
