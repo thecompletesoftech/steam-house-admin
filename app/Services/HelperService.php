@@ -200,22 +200,17 @@ curl_close($ch);
 
         $headr = array();
         $headr[] = 'Content-type: application/json';
-        // $fcm_server_key = config()->get('services.fcm.server_key');
         $fcm_server_key = env('FCM_SERVER_KEY');
         $headr[] = 'Authorization: key=' . $fcm_server_key;
-
         $user = UserService::getById($noti_data['id']);
 
         if($user->push_notification==0)
         {
             return true;
         }
-
         $noti_data['notification']['sound']="default";
-
         $data_array =
             [
-
                 "to" => $user->fcm_token,
                 "notification" => $noti_data['notification'],
                 "data"=>[

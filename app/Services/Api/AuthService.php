@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Services\UserService;
 use App\Services\RatingService;
 use App\Services\HelperService;
+use App\Services\NotificationService;
 use App\Services\FileService;
 use Carbon\Carbon;
 use Exception;
@@ -117,8 +118,6 @@ class AuthService
             $data=array('fcm_token'=>$request->fcm_token);
 
             $result=DB::table('users')->where('username', $request->username)->update($data);
-
-
         }
 
         Artisan::call('livedata:livedata');
@@ -257,53 +256,7 @@ class AuthService
         {
            $input['meter_id']=$request->meter_id;
         }
-            //  if(!empty($request->meter_id))
-            //  {
-            //  $input['meter_id']=$request->meter_id;
-            //  }
-            //  if(!empty($request->manager_id))
-            //  {
-            //  $input['manager_id']=$request->manager_id;
-            //  }
-            //  if(!empty($request->username))
-            //  {
-            //  $input['username']=$request->username;
-            //  }
-            //  if(!empty($request->name))
-            //  {
-            //  $input['name']=$request->name;
-            //  }
-            //  if(!empty($request->email))
-            //  {
-            //  $input['email']=$request->email;
-            //  }
-            //  if(!empty($request->phone))
-            //  {
-            //  $input['phone']=$request->phone;
-            //  }
-            //  if(!empty($request->about))
-            //  {
-            //  $input['about']=$request->about;
-            //  }
-            //  if(!empty($request->password))
-            //  {
-            //  $input['password']=$request->password;
-            //  }
-            //  if(!empty($request->c_password))
-            //  {
-            //  $input['c_password']=$request->c_password;
-            //  }
-            //  if(!empty($request->status))
-            //  {
-            //  $input['status']=$request->status;
-            //  }
-            //  if(!empty($request->role))
-            //  {
-            //  $input['role']=$request->role;
-            //  }
-             print_r($input);
-             die;
-            //  $result = DB::table('users')->whereId($id)->update($input);
+
              $result = User::where('id',auth()->user()->id)->update($input);
             if ($result) {
                 return response()->json(
@@ -387,6 +340,17 @@ class AuthService
                 }
                 $input1['otp']= $otp;
                         $data = DB::table('service_request')->where('id',$request->service_request_id)->update($input1);
+
+                        $user_service=ServiceRequestModel::where('id',$request->service_request_id)->first();
+
+
+                        $input=[
+                            'notification'=>'Your Otp',
+                            'message'=>'Your Otp'.' '.$otp,
+                            'user_id'=>$user_service->user_id,
+                        ];
+
+                        NotificationService::create($input);
                 // $data = DB::table('customertrack')->where('Service_request_id',$request->Service_request_id)->update($input1);
 
             return response()->json(
@@ -833,6 +797,41 @@ public static function verifyOtp(Request $request)
 // ----------------------------------------------------------------------------------------------
 
 
+//Api For Update Push_Notification
+    public static function updatePushNotification(Request $request){
+
+        $request->validate([
+            'push_notification' => 'required',
+
+        ]);
+            $data=array('push_notification'=>$request->push_notification);
+
+            $result=DB::table('users')->where('id', auth()->user()->id)->update($data);
+
+            if ($result)
+            {
+                return response()->json(
+                    [
+                        'status' => true,
+                        'message' => 'Push Notification Update Successfully'
+
+                    ],
+                    200
+                        );
+                     } else {
+                return response()->json(
+                    [
+                        'status' => false,
+                        'message' => 'Data not  Updated',
+                        'data' =>[],
+                    ],
+                    200
+                );
+                }
+
+
+
+    }
 
 
 
@@ -996,13 +995,9 @@ public static function verifyOtp(Request $request)
                 'longitude' => $request->longitude,
                 'address' => $request->address,
                 'status' => $request->status,
-
-
                 'otp' => $request->otp,
                 'created_at' => Carbon::now(),
-
                 'updated_at' => Carbon::now()
-
                 ];
 
                 // if(!empty($input['emp_id'])){
@@ -1018,6 +1013,18 @@ public static function verifyOtp(Request $request)
 
 
                 $servicerequest = ServiceRequestModel::create($input);
+
+
+
+                $input=[
+                    'notification'=>'New Request',
+                    'message'=>'You have New Service Request',
+                    'user_id'=>$request->manger_id,
+                ];
+
+                NotificationService::create($input);
+
+
 
                 $userss = DB::table('users')->where('id',$servicerequest->user_id)->select('name','address','phone')->first();
                 $location=DB::table('users')->select('location.location')->join('location','location.location_id','=','users.address')->where('users.id',$servicerequest->user_id)->first();
@@ -1277,15 +1284,16 @@ public static function verifyOtp(Request $request)
 
             $inputdata=DB::table('service_request')->where('id', $id)->update($input);
 
+            $input=[
+                'notification'=>'New Assign',
+                'message'=>'You  Assigned By Manager',
+                'user_id'=>$request->emp_id,
+            ];
+
+            NotificationService::create($input);
+
+
             $emp = DB::table('users')->where('id',$request->emp_id)->select('name','phone')->first();
-
-            // $empdata=DB::table('service_request')->where('id', $id)->get();
-
-            // $input=DB::table('customertrack')->where('Service_request_id', $request->user_id)->update(array('assign_engineer' => $emp_id));
-            // $input['emp_id']=$request->emp_id;
-
-
-                // $servicerequest = ServiceRequestModel::create($input);
 
                 $track =
                 [
@@ -1485,6 +1493,9 @@ public static function verifyOtp(Request $request)
                 $status=User::where('manager_id',$request->ManagerID)->where('role','0')->orderBy('created_at', 'desc')->get();
                 // $status = DB::table('company_list')->get();
 
+                // $livedata=
+
+
                 if (count($status)>0)
                 {
                     return response()->json(
@@ -1609,65 +1620,6 @@ public static function verifyOtp(Request $request)
                         }
             }
             // update
-        public static function trackingstatusupdate(Request $request,$id)
-        {
-
-                 $input=array();
-                 if(!empty($request->Service_request_id))
-                 {
-                    $input['Service_request_id']=$request->Service_request_id;
-                 }
-                 if(!empty($request->service_generated))
-                 {
-                    $input['service_generated']=$request->service_generated;
-                 }
-                 if(!empty($request->Pending_assignment))
-                 {
-                    $input['Pending_assignment']=$request->Pending_assignment;
-                 }
-                 if(!empty($request->assign_engineer))
-                 {
-                    $input['assign_engineer']=$request->assign_engineer;
-                 }
-                 if(!empty($request->engineer_checkin))
-                 {
-                    $input['engineer_checkin']=$request->engineer_checkin;
-                 }
-                 if(!empty($request->service_process))
-                 {
-                    $input['service_process']=$request->service_process;
-                 }
-                 if(!empty($request->solve_by_engineer))
-                 {
-                    $input['solve_by_engineer']=$request->solve_by_engineer;
-                 }
-                 if(!empty($request->service_closed))
-                 {
-                    $input['service_closed']=$request->service_closed;
-                 }
-
-              $updatedata = DB::table('customertrack')->where('track_id',$id)->update($input);
-                // $updatedata = TrackingModel::where('track_id',auth()->user()->id)->update($input);
-                if ($updatedata) {
-                    return response()->json(
-                        [
-                            'status' => true,
-                            'message' => 'Status Update Successfully'
-
-                        ],
-                        200
-                    );
-                } else {
-                    return response()->json(
-                        [
-                            'status' => false,
-                            'message' => 'Status not Updated',
-                            'data' =>[],
-                        ],
-                        200
-                    );
-                }
-        }
 
  //Manager Feedback
             //list
@@ -1715,23 +1667,22 @@ public static function verifyOtp(Request $request)
             ];
                     $service_request=TrackingModel::where('Service_request_id',$request->Service_request_id)->where('text',"Service Request Closed")->update($closedticket);
 
+                    $manager_service=ServiceRequestModel::where('id',$request->Service_request_id)->first();
+                    $input=[
+                        'notification'=>'Work Complete',
+                        'message'=>'Work completed please check it and give feedback',
+                        'user_id'=>$manager_service->user_id,
+                    ];
+
+                    NotificationService::create($input);
+
+
                     $service_status =
                     [
                     'status' =>4
                     ];
                     $feedback = ServiceRequestModel::where('id',$request->Service_request_id)->update($service_status);
 
-
-                    // if(count($service_request)>0){
-                    // }else{
-                    //     $tracking = TrackingModel::create($track);
-                    // }
-                // $track =
-                // [
-                // 'Service_request_id' => $Service_request_id->id,
-                // 'service_closed' => "Close",
-                // ];
-                // $tracking = TrackingModel::create($track);
 
 
                 if ($managerfeedback) {
@@ -1862,7 +1813,14 @@ public static function verifyOtp(Request $request)
                         ];
 
                             $service_request=TrackingModel::create($closed);
+                            $manager_service=ServiceRequestModel::where('id',$request->Service_request_id)->first();
+                            $input=[
+                                'notification'=>'Work Complete',
+                                'message'=>'Work completed by engineer so, please check it and close the ticket',
+                                'user_id'=>$manager_service->manger_id,
+                            ];
 
+                            NotificationService::create($input);
 
 
 
@@ -2021,17 +1979,17 @@ public static function verifyOtp(Request $request)
 
                 ]);
 
-
-
                      $input=array();
-                     if(!empty($request->name)){
-                     $input['name']=$request->name;
-                     }
+
                      if(!empty($request->phone)){
                      $input['phone']=$request->phone;
                      }
-
-
+                     if(!empty($request->email)){
+                        $input['email']=$request->email;
+                        }
+                        if(!empty($request->c_address)){
+                            $input['c_address']=$request->c_address;
+                            }
 
                      if(!empty($request->old_password)){
 
@@ -2046,25 +2004,18 @@ public static function verifyOtp(Request $request)
                                 200
                             );
                         }
-
-
                             $input['password'] = Hash::make($request->new_password);
 
                     }
 
-
-
-
-
-
-
                     $result = User::where('id',auth()->user()->id)->update($input);
+                    $user_details=User::where('id',auth()->user()->id)->first();
                     if ($result) {
                         return response()->json(
                             [
                                 'status' => true,
-                                'message' => 'Profile Update Successfully'
-
+                                'message' => 'Profile Update Successfully',
+                                'data' => $user_details
                             ],
                             200
                         );
@@ -2214,6 +2165,10 @@ public static function verifyOtp(Request $request)
         public static function livedata(){
 
             $livedata = DB::table('livedata')->get();
+
+
+
+
 
             if (!empty($livedata))
             {

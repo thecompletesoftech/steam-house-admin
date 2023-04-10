@@ -189,6 +189,22 @@ class AuthController extends Controller
 
 
 
+      /**
+     * Update Push Notification
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePushNotification(Request $request)
+    {
+
+        return $this->apiAuthService->updatePushNotification($request);
+    }
+
+
+
+
+
      /**
      * Update  Status
      *

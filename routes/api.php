@@ -80,6 +80,7 @@ Route::group(['middleware' => ['optimizeImages'], 'prefix' => '/v1/customer', 'n
             Route::post('profileUpdate', 'profileUpdate');
             Route::post('userProfile', 'userProfile');
             Route::post('editProfile', 'editProfile');
+            Route::post('updatePushNotification', 'updatePushNotification');
             Route::post('travel', 'travel');
             Route::post('getPlaceByid', 'getPlaceByid');
 

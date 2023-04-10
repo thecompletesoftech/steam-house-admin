@@ -16,5 +16,6 @@ class LocationModel extends Model
     protected $fillable =
     [
        'location',
+       'contact_no'
     ];
 }

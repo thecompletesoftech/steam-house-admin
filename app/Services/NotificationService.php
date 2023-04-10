@@ -14,9 +14,9 @@ class NotificationService
      */
     public static function create(array $data)
     {
-       
+
         $data = Notification::create($data);
-        
+
         $notification = [
             "id" => $data->user_id,
             "notification" => [
@@ -24,7 +24,10 @@ class NotificationService
                 "body" => $data->message],
         ];
 
+
          $notification = HelperService::sendNotification($notification);
+
+         
         return $data;
     }
 
@@ -110,9 +113,9 @@ class NotificationService
      */
     public static function datatable()
     {
-      
+
         $data = Notification::orderBy('created_at', 'desc')->paginate(10);
-        
+
         return $data;
     }
 }

@@ -16,11 +16,13 @@ class LocationRequest extends FormRequest
     {
         if (!request()->is('admin/steamhousefolder/create')) {
             return [
-                // 'location' => 'required',
+                'location' => 'required',
+                'contact_no'=>'numeric|digits:10',
             ];
         } else {
             return [
-                // 'location' => 'required',
+                'location' => 'required',
+                'contact_no'=>'numeric|digits:10',
             ];
         }
     }
@@ -28,7 +30,8 @@ class LocationRequest extends FormRequest
     public function messages()
     {
         return [
-            // 'location.required' => __('validation.required', ['attribute' => 'location']),
+            'location.required' => __('validation.required', ['attribute' => 'location']),
+            'contact_no.required' => __('validation.required', ['attribute' => 'Contact']),
 
         ];
     }

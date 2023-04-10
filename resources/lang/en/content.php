@@ -274,6 +274,8 @@ return [
     'name' => 'Name',
     'c_name' => 'Company Name',
     'registration_address' => 'Company Address',
+    'latitude' => 'Latitude',
+    'longitude' => 'Longitude',
 
     'email' => 'Email',
     'phone' => 'Phone',
@@ -375,6 +377,7 @@ return [
     // Company list & Location
      'company_name' => 'Company',
      'location' => 'Location',
+     'contact' => 'Helpline No',
      'company_list' => 'Company List',
      'company_username' => 'Company Username',
      'company_name' => 'Company',

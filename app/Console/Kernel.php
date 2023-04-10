@@ -15,7 +15,7 @@ class Kernel extends ConsoleKernel
      */
 
      protected $commands = [
-        \App\Console\Commands\Livedata::class,
+        // \App\Console\Commands\Livedata::class,
 ];
 
 
@@ -24,8 +24,21 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         // $schedule->call('App\Http\Controllers\Api\V1\Customer\AuthController@login')->cron('*');
+
         $schedule->command('livedata:livedata')
              ->everyMinutes();
+
+             $schedule->call(function () {
+                $id = 1;
+                  $input = [
+                'livedata'=>$livedata,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
+            ];
+
+                $updatedata=DB::table('livedata')->where('id',$id)->update($input);
+
+            })->everyMinute();
 
 
 
