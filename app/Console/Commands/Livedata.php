@@ -13,7 +13,7 @@ class Livedata extends Command
      *
      * @var string
      */
-    protected $signature = 'livedata:livedata';
+    protected $signature = 'livedata:update';
 
     /**
      * The console command description.
@@ -29,6 +29,8 @@ class Livedata extends Command
      */
     public function handle()
     {
+
+
 
         try {
 

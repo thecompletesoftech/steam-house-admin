@@ -1018,7 +1018,7 @@ public static function verifyOtp(Request $request)
 
                 $input=[
                     'notification'=>'New Request',
-                    'message'=>'You have New Service Request',
+                    'message'=>'A New service request for '.auth()->user()->name.' is Assigned to you',
                     'user_id'=>$request->manger_id,
                 ];
 
@@ -1283,14 +1283,31 @@ public static function verifyOtp(Request $request)
             }
 
             $inputdata=DB::table('service_request')->where('id', $id)->update($input);
+            $userdata=DB::table('service_request')->where('id',$id)->first();
+            $user=DB::table('users')->where('id',$userdata->user_id)->first();
+            $engineer=DB::table('users')->where('id',$request->emp_id)->first();
 
-            $input=[
+
+
+            $new=[
                 'notification'=>'New Assign',
-                'message'=>'You  Assigned By Manager',
+                'message'=>'A new service request for '.$user->name.' is assigned to you',
                 'user_id'=>$request->emp_id,
             ];
 
+
+            $employee_notification=NotificationService::create($new);
+
+
+            $input=[
+                'notification'=>'Notification',
+                'message'=>'Your Service Request for '.$engineer->name.' is assigned to you',
+                'user_id'=>$userdata->user_id,
+            ];
+
             NotificationService::create($input);
+
+
 
 
             $emp = DB::table('users')->where('id',$request->emp_id)->select('name','phone')->first();
@@ -1326,7 +1343,7 @@ public static function verifyOtp(Request $request)
                     [
                         'status' => true,
                         'message' => 'Status Update Successfully',
-                        'data'=>$inputdata
+
                     ],
                     200
                 );

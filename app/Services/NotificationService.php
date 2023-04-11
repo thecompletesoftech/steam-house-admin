@@ -27,7 +27,7 @@ class NotificationService
 
          $notification = HelperService::sendNotification($notification);
 
-         
+
         return $data;
     }
 

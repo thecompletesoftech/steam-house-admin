@@ -177,15 +177,38 @@ class ManagerRegistrationController extends Controller
 
         $data=DB::table('users')->select('*','users.id as id')->join('location','location.location_id','=','users.address')->
         join('service_request','service_request.user_id','=','users.id')->where('users.id',$id)->first();
-
-
         $manager=DB::table('users')->select('name','id')->where('id',$data->manager_id)->first();
-
         return $manager->name;
 
     }
 
 
+
+    // public function livedata(Request $request){
+
+    //     try {
+
+    //         $livedata= Http::get('http://122.187.205.206:5008/api/Values/GetAllData?key=steam8108');
+
+    //         print_r($livedata);
+    //         die;
+    //         $input = [
+
+    //             'livedata'=>$livedata,
+    //             'created_at' => Carbon::now(),
+    //             'updated_at' => Carbon::now()
+    //         ];
+
+    //             $updatedata=DB::table('livedata')->where('id',1)->update($input);
+
+    //     } catch (exception $e) {
+
+    //         return response()->json('error', $e);
+
+    //     }
+
+
+    // }
 
 
 

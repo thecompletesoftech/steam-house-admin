@@ -204,11 +204,13 @@ curl_close($ch);
         $headr[] = 'Authorization: key=' . $fcm_server_key;
         $user = UserService::getById($noti_data['id']);
 
-        if($user->push_notification==0)
+
+        if($user->user==0)
         {
             return true;
         }
         $noti_data['notification']['sound']="default";
+
         $data_array =
             [
                 "to" => $user->fcm_token,
