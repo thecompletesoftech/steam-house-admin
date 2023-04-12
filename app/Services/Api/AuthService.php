@@ -48,9 +48,6 @@ class AuthService
     public static function login(Request $request)
     {
 
-
-
-
             $user = User::where('email', $request->username)
                     ->orwhere('phone', $request->username)
                     ->orwhere('username', $request->username)
@@ -117,16 +114,23 @@ class AuthService
                 if(!empty($request->fcm_token)){
             $data=array('fcm_token'=>$request->fcm_token);
 
+
             $result=DB::table('users')->where('username', $request->username)->update($data);
+
+
         }
 
-        Artisan::call('livedata:livedata');
+        $location_data=DB::table('users')->select('users.id','users.address','location.location_id','location.contact_no as helpline_no')
+        ->join('location','location.location_id','=','users.address')->where('users.id',$user->id)->first();
+             $user['helpline_no']=$location_data->helpline_no;
+        // Artisan::call('livedata:update');
                 return response()->json(
                 [
                     'status' => true,
                     'message' => 'Login Successfully',
                     'token' => $token,
-                    'data' => $user
+                    'data' => $user,
+                    // 'location'=>$location_data->helpline_no
                 ],
                 200
             );
@@ -256,7 +260,52 @@ class AuthService
         {
            $input['meter_id']=$request->meter_id;
         }
+            //  if(!empty($request->meter_id))
+            //  {
+            //  $input['meter_id']=$request->meter_id;
+            //  }
+            //  if(!empty($request->manager_id))
+            //  {
+            //  $input['manager_id']=$request->manager_id;
+            //  }
+            //  if(!empty($request->username))
+            //  {
+            //  $input['username']=$request->username;
+            //  }
+            //  if(!empty($request->name))
+            //  {
+            //  $input['name']=$request->name;
+            //  }
+            //  if(!empty($request->email))
+            //  {
+            //  $input['email']=$request->email;
+            //  }
+            //  if(!empty($request->phone))
+            //  {
+            //  $input['phone']=$request->phone;
+            //  }
+            //  if(!empty($request->about))
+            //  {
+            //  $input['about']=$request->about;
+            //  }
+            //  if(!empty($request->password))
+            //  {
+            //  $input['password']=$request->password;
+            //  }
+            //  if(!empty($request->c_password))
+            //  {
+            //  $input['c_password']=$request->c_password;
+            //  }
+            //  if(!empty($request->status))
+            //  {
+            //  $input['status']=$request->status;
+            //  }
+            //  if(!empty($request->role))
+            //  {
+            //  $input['role']=$request->role;
+            //  }
 
+            //  $result = DB::table('users')->whereId($id)->update($input);
              $result = User::where('id',auth()->user()->id)->update($input);
             if ($result) {
                 return response()->json(
@@ -345,8 +394,8 @@ class AuthService
 
 
                         $input=[
-                            'notification'=>'Your Otp',
-                            'message'=>'Your Otp'.' '.$otp,
+                            'notification'=>'OTP',
+                            'message'=>'Share the OTP with our Engineer'.' '.$otp,
                             'user_id'=>$user_service->user_id,
                         ];
 
@@ -385,16 +434,25 @@ class AuthService
  */
 public static function verifyOtp(Request $request)
 {
-        $user = ServiceRequestModel::where('id', $request->service_request_id)->first();
+
+
+    $request->validate([
+        'otp' => 'required',
+        'phone' => 'required',
+
+    ]);
+
+    $user = ServiceRequestModel::where('id', $request->service_request_id)->first();
         if ($user)
     {
 
 
-        $data = ServiceRequestModel::where('phone', $user->phone)
-            ->where('otp', $request->otp)
-            ->orderBy('created_at', 'desc')
-            ->get();
-            if ($data) {
+        $data = ServiceRequestModel::where('id',$request->service_request_id)
+        ->where('phone', $user->phone)
+        ->where('otp', $request->otp)
+        ->orderBy('created_at', 'desc')
+        ->first();
+            if (!empty($data)) {
 
 
                 $old_track =
@@ -760,6 +818,46 @@ public static function verifyOtp(Request $request)
 
 
 
+    //Api For Update Push_Notification
+    public static function updatePushNotification(Request $request){
+
+        $request->validate([
+            'push_notification' => 'required',
+
+        ]);
+            $data=array('push_notification'=>$request->push_notification);
+
+            $result=DB::table('users')->where('id', auth()->user()->id)->update($data);
+
+            if ($result)
+            {
+                return response()->json(
+                    [
+                        'status' => true,
+                        'message' => 'Push Notification Update Successfully'
+
+                    ],
+                    200
+                        );
+                     } else {
+                return response()->json(
+                    [
+                        'status' => false,
+                        'message' => 'Data not  Updated',
+                        'data' =>[],
+                    ],
+                    200
+                );
+                }
+
+
+
+    }
+
+
+
+
+
 
     public static function logouttest(Request $request)
     {
@@ -797,41 +895,6 @@ public static function verifyOtp(Request $request)
 // ----------------------------------------------------------------------------------------------
 
 
-//Api For Update Push_Notification
-    public static function updatePushNotification(Request $request){
-
-        $request->validate([
-            'push_notification' => 'required',
-
-        ]);
-            $data=array('push_notification'=>$request->push_notification);
-
-            $result=DB::table('users')->where('id', auth()->user()->id)->update($data);
-
-            if ($result)
-            {
-                return response()->json(
-                    [
-                        'status' => true,
-                        'message' => 'Push Notification Update Successfully'
-
-                    ],
-                    200
-                        );
-                     } else {
-                return response()->json(
-                    [
-                        'status' => false,
-                        'message' => 'Data not  Updated',
-                        'data' =>[],
-                    ],
-                    200
-                );
-                }
-
-
-
-    }
 
 
 
@@ -1011,14 +1074,11 @@ public static function verifyOtp(Request $request)
 
                   }
 
-
                 $servicerequest = ServiceRequestModel::create($input);
 
-
-
                 $input=[
-                    'notification'=>'New Request',
-                    'message'=>'A New service request for '.auth()->user()->name.' is Assigned to you',
+                    'notification'=>auth()->user()->name,
+                    'message'=>'A new service request for '.auth()->user()->name.' is raised',
                     'user_id'=>$request->manger_id,
                 ];
 
@@ -1287,27 +1347,20 @@ public static function verifyOtp(Request $request)
             $user=DB::table('users')->where('id',$userdata->user_id)->first();
             $engineer=DB::table('users')->where('id',$request->emp_id)->first();
 
-
-
             $new=[
-                'notification'=>'New Assign',
+                'notification'=>$user->name,
                 'message'=>'A new service request for '.$user->name.' is assigned to you',
                 'user_id'=>$request->emp_id,
             ];
 
-
             $employee_notification=NotificationService::create($new);
-
-
             $input=[
-                'notification'=>'Notification',
-                'message'=>'Your Service Request for '.$engineer->name.' is assigned to you',
+                'notification'=>'Engineer Assigned',
+                'message'=>$engineer->name.' is assigned for your service request',
                 'user_id'=>$userdata->user_id,
             ];
 
             NotificationService::create($input);
-
-
 
 
             $emp = DB::table('users')->where('id',$request->emp_id)->select('name','phone')->first();
@@ -1343,7 +1396,7 @@ public static function verifyOtp(Request $request)
                     [
                         'status' => true,
                         'message' => 'Status Update Successfully',
-
+                        'data'=>$inputdata
                     ],
                     200
                 );
@@ -1510,9 +1563,6 @@ public static function verifyOtp(Request $request)
                 $status=User::where('manager_id',$request->ManagerID)->where('role','0')->orderBy('created_at', 'desc')->get();
                 // $status = DB::table('company_list')->get();
 
-                // $livedata=
-
-
                 if (count($status)>0)
                 {
                     return response()->json(
@@ -1674,9 +1724,7 @@ public static function verifyOtp(Request $request)
                 'manager_feedback_id' => $request->manager_feedback_id,
                 'discription' => $request->discription,
                 ];
-
                 $managerfeedback = ManagerFeedbackModel::create($input);
-
                 $closedticket =
                 [
                 'status' =>2,
@@ -1686,12 +1734,16 @@ public static function verifyOtp(Request $request)
 
                     $manager_service=ServiceRequestModel::where('id',$request->Service_request_id)->first();
                     $input=[
-                        'notification'=>'Work Complete',
-                        'message'=>'Work completed please check it and give feedback',
+                        'notification'=>'Request resolved',
+                        'message'=>'Your service request has been resolved. Please share your feedback.',
                         'user_id'=>$manager_service->user_id,
                     ];
 
                     NotificationService::create($input);
+
+
+
+
 
 
                     $service_status =
@@ -1789,6 +1841,10 @@ public static function verifyOtp(Request $request)
             public static function employeefeedbackaddapi(Request $request)
             {
 
+                $request->validate([
+                    'pictures' => 'required',
+                    ]);
+
                 $input =
                 [
                 'Service_request_id' => $request->Service_request_id,
@@ -1833,7 +1889,7 @@ public static function verifyOtp(Request $request)
                             $manager_service=ServiceRequestModel::where('id',$request->Service_request_id)->first();
                             $input=[
                                 'notification'=>'Work Complete',
-                                'message'=>'Work completed by engineer so, please check it and close the ticket',
+                                'message'=>'The Engineer has completed the work. Please check and close the ticket.',
                                 'user_id'=>$manager_service->manger_id,
                             ];
 
@@ -1914,7 +1970,6 @@ public static function verifyOtp(Request $request)
                     );
                 }
         }
-
  //Employee
             //list
             public static function employeeslistapi(Request $request){
@@ -2183,17 +2238,13 @@ public static function verifyOtp(Request $request)
 
             $livedata = DB::table('livedata')->get();
 
-
-
-
-
             if (!empty($livedata))
             {
                 return response()->json(
                     [
                         'status' => true,
                         'message' => 'Data Find successfully',
-                        'data' => $livedata
+                        'data' => json_decode($livedata)
                     ],
                     200
                 );

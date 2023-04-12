@@ -80,11 +80,12 @@ Route::group(['middleware' => ['optimizeImages'], 'prefix' => '/v1/customer', 'n
             Route::post('profileUpdate', 'profileUpdate');
             Route::post('userProfile', 'userProfile');
             Route::post('editProfile', 'editProfile');
+
             Route::post('updatePushNotification', 'updatePushNotification');
             Route::post('travel', 'travel');
             Route::post('getPlaceByid', 'getPlaceByid');
-
             Route::post('userAdventure', 'userAdventure');
+
             Route::post('placeById', 'placeById');
             Route::post('deleteAccount', 'deleteAccount');
             Route::post('logout', 'logout');
@@ -95,10 +96,12 @@ Route::group(['middleware' => ['optimizeImages'], 'prefix' => '/v1/customer', 'n
              Route::post('ServiceRequestBYUserId', 'ServiceRequestBYUserId');
              Route::post('ServiceRequestBYManagerID', 'ServiceRequestBYManagerID');
              Route::post('ServiceRequestBYEmpId', 'ServiceRequestBYEmpId');
+
              Route::post('servicesrequestupdate/{id}', 'servicesrequestupdate');
              Route::post('servicesrequeststatusupdate/{id}', 'servicesrequeststatusupdate');
              Route::post('servicesrequest', 'servicesrequestapi');
-            // Customer Feedback Api
+
+             // Customer Feedback Api
              Route::post('reviews', 'reviewapi');
              Route::post('reviewslist', 'reviewapilist');
              Route::post('review', 'review');

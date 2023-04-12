@@ -110,7 +110,7 @@
                 </div>
                 <label class="col-lg-2 col-form-label required fw-bold fs-6">Latitude</label>
                 <div class="col-lg-4 fv-row">
-                    {!! Form::text('latitude ', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.latitude', 1)]) !!}
+                    {!! Form::text('latitude', null, ['min' => 2, 'max' => 6, 'value' => 2, 'class' => 'form-control form-control-lg form-control-solid', 'placeholder' => trans_choice('content.latitude', 1)]) !!}
                 </div>
 
         </div>
