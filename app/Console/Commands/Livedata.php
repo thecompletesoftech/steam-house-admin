@@ -32,24 +32,43 @@ class Livedata extends Command
 
 
 
-        try {
+        // try {
 
+        //     $livedata= Http::get('http://122.187.205.206:5008/api/Values/GetAllData?key=steam8108');
+
+        //     $input = [
+
+        //         'livedata'=>$livedata,
+        //         'created_at' => Carbon::now(),
+
+        //         'updated_at' => Carbon::now()
+        //     ];
+
+        //         $updatedata=DB::table('livedata')->where('id',1)->update($input);
+
+        // } catch (exception $e) {
+
+        //     return response()->json('error', $e);
+
+        // }
+        while (true) {
+            // Update data here
             $livedata= Http::get('http://122.187.205.206:5008/api/Values/GetAllData?key=steam8108');
-
             $input = [
 
                 'livedata'=>$livedata,
                 'created_at' => Carbon::now(),
-
                 'updated_at' => Carbon::now()
             ];
 
                 $updatedata=DB::table('livedata')->where('id',1)->update($input);
 
-        } catch (exception $e) {
-
-            return response()->json('error', $e);
-
+            sleep(60); // wait for 60 seconds before updating again
         }
+
+
     }
+
+
+
 }

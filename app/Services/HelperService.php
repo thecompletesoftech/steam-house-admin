@@ -205,7 +205,7 @@ curl_close($ch);
         $user = UserService::getById($noti_data['id']);
 
 
-        if($user->user==0)
+        if($user->push_notification==0)
         {
             return true;
         }

@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
+use Illuminate\Support\Facades\Http;
 
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -21,19 +22,23 @@ class Kernel extends ConsoleKernel
 
 
 
+
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
-        // $schedule->call('App\Http\Controllers\Api\V1\Customer\AuthController@login')->cron('*');
+
+
         // $schedule->command('livedata:steamdata')
         //      ->everyMinutes();
 
-             $schedule->command('livedata:update')->everyMinute();
+        $schedule->command('livedata:update')->everyMinute();
+
+
         // $schedule->call(function(){
         //     info('called every minute');
         // })->everyMinute();
 
     }
+
 
     /**
      * Register the commands for the application.
