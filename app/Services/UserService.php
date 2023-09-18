@@ -269,14 +269,14 @@ class UserService
         $result=DB::table('users')->where('id',$id)->delete();
         $result2=DB::table('service_request')->where('emp_id',$id)->delete();
         $result3=DB::table('employee_feedback')->where('employee_id',$id)->delete();
-        return $result.$result1.$result2.$result3;
+        return $result.$result2.$result3;
     }
 
 
 
     public static function delete_service_request($id){
         $result=DB::table('service_request')->where('id',$id)->delete();
-        $result2=DB::table('managerfeedback')->where('Service_request_id',$id)->delete();
+        $result1=DB::table('managerfeedback')->where('Service_request_id',$id)->delete();
         $result2=DB::table('customerfeedback')->where('Service_request_id',$id)->delete();
         $result3=DB::table('employee_feedback')->where('Service_request_id',$id)->delete();
         return $result.$result1.$result2.$result3;

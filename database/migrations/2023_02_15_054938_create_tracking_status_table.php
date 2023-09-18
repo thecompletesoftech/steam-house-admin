@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('service_closed')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->softDeletes();
         });
     }
 

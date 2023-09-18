@@ -30,6 +30,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default(0)->comment('0:pending,1:assigned,2:inprocess,3:complated');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
+            $table->softDeletes();
         });
     }
 

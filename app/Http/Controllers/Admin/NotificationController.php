@@ -57,7 +57,6 @@ class NotificationController extends Controller
      */
     public function index(Request $request)
     {
-
         $items = $this->notificationService->datatable();
 
         if ($request->ajax()) {
@@ -84,10 +83,9 @@ class NotificationController extends Controller
      * @param  NotificationRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(NotificationRequest $request)
+    public function store(Request $request)
     {
         $input = $request->except(['_token', 'proengsoft_jsvalidation']);
-
 
         $data=array();
 
@@ -95,14 +93,11 @@ class NotificationController extends Controller
 
         foreach($data as $datas){
             $input['user_id']=$datas->id;
-            $battle = $this->notificationService->create($input);
-            }
-
-
-
-
+            $this->notificationService->create($input);
+        }
         return redirect()->route($this->index_route_name)
-            ->with('success', $this->mls->messageLanguage('created', 'notification', 1));
+        ->with('success', $this->mls->messageLanguage('created', 'notification', 1));
+
     }
 
     /**

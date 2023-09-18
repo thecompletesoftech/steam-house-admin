@@ -27,12 +27,12 @@ class ManagerEditRequest extends FormRequest
         if (!request()->is('admin/users/create')) {
             return [
                 //  'meter_id' => 'required|unique:users,meter_id',
-                // 'username' => 'required|unique:users,username',
-                // 'name' => 'required|max:150',
-                // 'email' => 'required|email|unique:users,email',
+                'username' => 'required',
+                'name' => 'required|max:150',
+                'email' => 'required|email',
                 'phone' => 'max:10|digits:10',
                 // 'about' => 'required',
-                // 'password' => 'required',
+                'password' => 'required',
                 'c_password' => 'same:password',
                 // 'role' => 'required',
 
@@ -43,12 +43,12 @@ class ManagerEditRequest extends FormRequest
         } else {
             return [
                 //  'meter_id' => 'required|unique:users,meter_id',
-                // 'username' => 'required|unique:users,username',
-                // 'name' => 'required',
-                // 'email' => 'required|email|unique:users,email',
+                'username' => 'required',
+                'name' => 'required',
+                'email' => 'required|email',
                 'phone' => 'max:10|digits:10',
                 // 'about' => 'required',
-                // 'password' => 'required',
+                'password' => 'required',
                 'c_password' => 'same:password',
                 // 'role' => 'required',
             ];
@@ -64,7 +64,7 @@ class ManagerEditRequest extends FormRequest
             'email.email' => __('validation.email', ['attribute' => 'Email']),
             'email.unique' => __('validation.unique', ['attribute' => 'Email']),
             'username.required' => __('validation.required', ['attribute' => 'Username']),
-            'username.unique' => __('validation.unique', ['attribute' => 'Username']),
+            // 'username.unique' => __('validation.unique', ['attribute' => 'Username']),
             'phone.required' => __('validation.required', ['attribute' => 'Phone']),
             'phone.phone' => __('validation.phone', ['attribute' => 'Phone']),
             'phone.unique' => __('validation.unique', ['attribute' => 'Phone']),

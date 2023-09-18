@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('temprature');
             $table->string('flow');
             $table->string('totalizer');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

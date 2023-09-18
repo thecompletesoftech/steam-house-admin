@@ -71,6 +71,7 @@ class ManagerUserService
         ->join('location','location.location_id','=','users.address',)
         ->where('role',1)
         ->orderBy('users.created_at', 'desc')->paginate(10);
+       
         return $data;
     }
 

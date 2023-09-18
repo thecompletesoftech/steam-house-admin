@@ -23,6 +23,7 @@ return new class extends Migration
             $table->tinyInteger('ticket_engineer_reviewing')->default(0)->comment('0:pending,1:accept,2:complate');
             $table->tinyInteger('ticket_engineer_complated')->default(0)->comment('0:pending,1:accept,2:complate');
             $table->tinyInteger('verify_by_manager')->default(0)->comment('0:pending,1:accept,2:complate');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

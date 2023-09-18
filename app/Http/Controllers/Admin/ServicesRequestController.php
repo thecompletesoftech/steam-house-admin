@@ -10,6 +10,7 @@ use App\Models\ServiceRequestModel;
 use App\Models\User;
 use App\Models\LocationModel;
 use App\Services\ServiceRequestService;
+use App\Services\UserService;
 use App\Services\FileService;
 use App\Services\ManagerLanguageService;
 use App\Services\UtilityService;
@@ -24,7 +25,7 @@ class ServicesRequestController extends Controller
     protected $mls, $change_password, $assign_role, $uploads_image_directory;
     protected $index_view, $create_view, $edit_view, $detail_view, $tabe_view, $product_history_view;
     protected $index_route_name, $create_route_name, $detail_route_name, $edit_route_name;
-    protected $bookService, $utilityService, $intrestService;
+    protected $bookService, $utilityService, $intrestService,$servicerequest;
 
     public function __construct()
     {
@@ -135,13 +136,7 @@ class ServicesRequestController extends Controller
     public function destroy($id)
     {
         $result=UserService::delete_service_request($id);
-
         return redirect()->back()->withSuccess('Data Delete Successfully!');
-
     }
-
-
-
-
 
 }

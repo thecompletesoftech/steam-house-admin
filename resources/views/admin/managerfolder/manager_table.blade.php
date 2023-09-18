@@ -48,9 +48,6 @@
         @else
         <img src="{{ asset('blank_user.PNG') }}" style="width:50px; height:50px;border-radius: 25px;" />
         @endif
-
-
-
     </td>
     <td>{{$data->name}}</td>
     <td>{{$data->phone}}</td>

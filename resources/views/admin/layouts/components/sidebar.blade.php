@@ -19,11 +19,9 @@
         <div class="aside-logo flex-column-auto" id="kt_aside_logo">
             <!--begin::Logo-->
             <a href="javascript:void(0)" style="text-decoration: none;">
-                 <img alt="Logo"
-                    src="{{asset('admin/dist/media/logos/steamlogo.png')}}"
-                    class="h-55px logo" />
-                  {{-- <span style="font-size:20px;color:white;font-weight:400px;">Steam House</span> --}}
-                </a>
+                <img alt="Logo" src="{{ asset('admin/dist/media/logos/steamlogo.png') }}" class="h-55px logo" />
+                {{-- <span style="font-size:20px;color:white;font-weight:400px;">Steam House</span> --}}
+            </a>
             <!--end::Logo-->
             <!--begin::Aside toggler-->
             <div id="kt_aside_toggle" class="btn btn-icon w-auto px-0 btn-active-color-primary aside-toggle"
@@ -96,88 +94,7 @@
                         </div>
                     </div>
 
-                    {{-- <div data-kt-menu-trigger="click"
-                        class="menu-item menu-accordion {{ checkActiveSideBar(['users', 'roles', 'permissions']) ? 'hover show' : '' }}">
-                        <span class="menu-link">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotone/General/Shield-protected.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                            <rect x="0" y="0" width="24" height="24" />
-                                            <path
-                                                d="M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z"
-                                                fill="#000000" opacity="0.3" />
-                                            <path
-                                                d="M14.5,11 C15.0522847,11 15.5,11.4477153 15.5,12 L15.5,15 C15.5,15.5522847 15.0522847,16 14.5,16 L9.5,16 C8.94771525,16 8.5,15.5522847 8.5,15 L8.5,12 C8.5,11.4477153 8.94771525,11 9.5,11 L9.5,10.5 C9.5,9.11928813 10.6192881,8 12,8 C13.3807119,8 14.5,9.11928813 14.5,10.5 L14.5,11 Z M12,9 C11.1715729,9 10.5,9.67157288 10.5,10.5 L10.5,11 L13.5,11 L13.5,10.5 C13.5,9.67157288 12.8284271,9 12,9 Z"
-                                                fill="#000000" />
-                                        </g>
-                                    </svg>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </span>
-                            <span
-                                class="menu-title">{{ trans_choice('content.sidebar.user_management', 1) }}</span>
-                            <span class="menu-arrow"></span>
-                        </span>
-                        <div class="menu-sub menu-sub-accordion menu-active-bg">
-                            <div class="menu-item">
-                                <a class="menu-link {{ checkActiveSideBar(['users']) ? 'active' : '' }}"
-                                    href="{{ route('admin.users.index') }}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">{{ trans_choice('content.sidebar.user', 1) }}</span>
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a class="menu-link {{ checkActiveSideBar(['roles']) ? 'active' : '' }}"
-                                    href="{{ route('admin.roles.index') }}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span class="menu-title">{{ trans_choice('content.sidebar.role', 1) }}</span>
-                                </a>
-                            </div>
-                            <div class="menu-item">
-                                <a class="menu-link {{ checkActiveSideBar(['permissions']) ? 'active' : '' }}"
-                                    href="{{ route('admin.permissions.index') }}">
-                                    <span class="menu-bullet">
-                                        <span class="bullet bullet-dot"></span>
-                                    </span>
-                                    <span
-                                        class="menu-title">{{ trans_choice('content.sidebar.permission', 1) }}</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div> --}}
 
-                    {{-- <div class="menu-item">
-                        <a class="menu-link {{ checkActiveSideBar(['user']) ? 'menu-item active' : '' }}"
-                            href="{{ route('admin.users.index') }}">
-                            <span class="menu-icon">
-
-                                <span class="svg-icon svg-icon-2">
-                                    <!-- <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                        width="24px" height="24px" viewBox="0 0 24 24" version="1.1" >
-                                        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" >
-                                            <polygon points="0 0 24 0 24 24 0 24" />
-                                            <path
-                                                d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
-                                                fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                            <path
-                                                d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
-                                                fill="#000000" fill-rule="nonzero" />
-                                        </g>
-                                    </svg> -->
-                                    <i class="fa fa-users" style="color:white;font-size:15px;"></i>
-                                </span>
-
-                            </span>
-                            <span class="menu-title">Users</span>
-                        </a>
-                    </div> --}}
 
                     <div class="menu-item">
                         <a class="menu-link {{ checkActiveSideBar(['location']) ? 'menu-item active' : '' }}"
@@ -185,7 +102,7 @@
                             <span class="menu-icon">
                                 <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
                                 <span class="svg-icon svg-icon-2">
-                                <i class="fa fa-location-arrow " style="color:white;font-size:15px;"></i>
+                                    <i class="fa fa-location-arrow " style="color:white;font-size:15px;"></i>
                                 </span>
                                 <!--end::Svg Icon-->
                             </span>
@@ -213,14 +130,14 @@
                             <span class="menu-icon">
                                 <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
                                 <span class="svg-icon svg-icon-2">
-                                <i class="fa fa-list " style="color:white;font-size:15px;"></i>
+                                    <i class="fa fa-list " style="color:white;font-size:15px;"></i>
                                 </span>
                                 <!--end::Svg Icon-->
                             </span>
                             <span class="menu-title">Company</span>
                         </a>
                     </div>
-                     <div class="menu-item">
+                    <div class="menu-item">
                         <a class="menu-link {{ checkActiveSideBar(['employeeregistration']) ? 'menu-item active' : '' }}"
                             href="{{ route('admin.employeeregistrations.index') }}">
                             <span class="menu-icon">
@@ -234,30 +151,27 @@
                         </a>
                     </div>
 
-
-
-
                     <div class="menu-item">
                         <a class="menu-link {{ checkActiveSideBar(['servicerequest']) ? 'menu-item active' : '' }}"
-                        href="{{ route('admin.servicerequests.index') }}">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
-                            <span class="svg-icon svg-icon-2">
-                                <i class="fa fa-eye" style="color:white;font-size:15px;"></i>
+                            href="{{ route('admin.servicerequests.index') }}">
+                            <span class="menu-icon">
+                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
+                                <span class="svg-icon svg-icon-2">
+                                    <i class="fa fa-eye" style="color:white;font-size:15px;"></i>
+                                </span>
+                                <!--end::Svg Icon-->
                             </span>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Service Request</span>
-                    </a>
-                </div>
+                            <span class="menu-title">Service Request</span>
+                        </a>
+                    </div>
 
-    <div class="menu-item">
+                    <div class="menu-item">
                         <a class="menu-link {{ checkActiveSideBar(['notifications']) ? 'menu-item active' : '' }}"
                             href="{{ route('admin.notifications.index') }}">
                             <span class="menu-icon">
 
                                 <span class="svg-icon svg-icon-2">
-                                    <i class="fas fa-comment"></i>
+                                    <i class="fas fa-comment" style="color:white;font-size:15px;"></i>
 
                                 </span>
 
@@ -266,20 +180,6 @@
                         </a>
                     </div>
 
-
-                    {{-- <div class="menu-item">
-                        <a class="menu-link {{ checkActiveSideBar(['customerdata']) ? 'menu-item active' : '' }}"
-                            href="{{ route('admin.customerdatas.index') }}">
-                            <span class="menu-icon">
-                                <!--begin::Svg Icon | path: icons/duotone/General/User.svg-->
-                                <span class="svg-icon svg-icon-2">
-                                <i class="fa fa-database" style="color:white;font-size:15px;"></i>
-                                </span>
-                                <!--end::Svg Icon-->
-                            </span>
-                            <span class="menu-title">Live Data</span>
-                        </a>
-                    </div> --}}
                 </div>
                 <!--end::Menu-->
             </div>

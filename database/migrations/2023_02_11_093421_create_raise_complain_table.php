@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('number');
             $table->string('discription');
             $table->tinyInteger('status')->default(1)->comment('0:pending,1:accept,2:cancel, 3:inprocess,4:completed');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

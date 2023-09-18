@@ -26,31 +26,30 @@ class CompanyListRequest extends FormRequest
 
         if (!request()->is('admin/companylists/create')) {
             return [
-                 'meter_id' => 'required|unique:users,meter_id',
+                'meter_id' => 'required',
                 'username' => 'required',
                 'name' => 'required|max:150',
-                'email' => 'required',
-                'phone' => 'required|numeric|digits:10|unique:users,phone|starts_with:1,2,3,4,5,6,7,8,9',
+                'email' => 'required|email',
+                'phone' => 'required|numeric|digits:10',
                 'address'=>'required',
                 'manager_id'=>'required',
                 'password' => 'required',
+                'c_address' => 'required',
                 'c_password' => 'required_with:password|same:password',
                 // 'role' => 'required',
-
-
-
             ];
 
         } else {
             return [
-                 'meter_id' => 'required|unique:users,meter_id',
+                'meter_id' => 'required',
                 'username' => 'required',
                 'name' => 'required',
-                'email' => 'required',
-                'phone' => 'required|numeric|digits:10|unique:users,phone|starts_with:1,2,3,4,5,6,7,8,9',
+                'email' => 'required|email',
+                'phone' => 'required|numeric|digits:10',
                 'address'=>'required',
                 'manager_id'=>'required',
                 'password' => 'required',
+                'c_address' => 'required',
                 'c_password' => 'required_with:password|same:password',
                 'role' => 'required',
             ];
@@ -63,18 +62,15 @@ class CompanyListRequest extends FormRequest
             // 'meater_id.required' => __('validation.required', ['attribute' => 'Manager Id']),
             'name.required' => __('validation.required', ['attribute' => 'Name']),
             'email.required' => __('validation.required', ['attribute' => 'Email']),
-            // 'email.email' => __('validation.email', ['attribute' => 'Email']),
-            // 'email.unique' => __('validation.unique', ['attribute' => 'Email']),
+            'email.email' => __('validation.email', ['attribute' => 'Email']),
+            'email.unique' => __('validation.unique', ['attribute' => 'Email']),
             'username.required' => __('validation.required', ['attribute' => 'Username']),
-            // 'username.unique' => __('validation.unique', ['attribute' => 'Username']),
             'phone.required' => __('validation.required', ['attribute' => 'Phone']),
-            // 'phone.phone' => __('validation.phone', ['attribute' => 'Phone']),
-            // 'phone.unique' => __('validation.unique', ['attribute' => 'Phone']),
             'meter_id.required' => __('validation.required', ['attribute' => 'Meter ID']),
-
             'address.required' => __('validation.required', ['attribute' => 'Location']),
             'manager_id.required' => __('validation.required', ['attribute' => 'Manager']),
             'password.required' => __('validation.required', ['attribute' => 'password']),
+            'address.required' => __('validation.required', ['attribute' => 'Address']),
             'c_password.required' => __('validation.required', ['attribute' => 'confirm password']),
             'role.required' => __('validation.required', ['attribute' => 'role']),
         ];

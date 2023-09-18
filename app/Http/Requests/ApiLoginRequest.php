@@ -15,9 +15,10 @@ class ApiLoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'email:rfc,dns|exists:users,email',
+            // 'email' => 'email:rfc,dns|exists:users,email',
             // 'phone' => 'required',
             // 'name' => 'required',
+            'username' => 'required',
             'password' => 'required',
         ];
     }
@@ -31,11 +32,12 @@ class ApiLoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.required' => __('validation.required', ['attribute' => 'Email']),
-            'email.unique' => __('validation.unique', ['attribute' => 'Email']),
-            'email.exists' => "This Email doesn't registered with us.",
-            'phone.required' => __('validation.required', ['attribute' => 'phone']),
-            'name.required' => __('validation.required', ['attribute' => 'name']),
+            // 'email.required' => __('validation.required', ['attribute' => 'Email']),
+            // 'email.unique' => __('validation.unique', ['attribute' => 'Email']),
+            // 'email.exists' => "This Email doesn't registered with us.",
+            // 'phone.required' => __('validation.required', ['attribute' => 'phone']),
+            // 'name.required' => __('validation.required', ['attribute' => 'name']),
+            'username.required' => __('validation.required', ['attribute' => 'Username']),
             'password.required' => __('validation.required', ['attribute' => 'Password']),
 
         ];

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('role_id')->nullable();
             $table->string('service_request_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

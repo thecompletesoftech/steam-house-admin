@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
+use Exception;
 
 class Livedata extends Command
 {
@@ -29,46 +31,35 @@ class Livedata extends Command
      */
     public function handle()
     {
-
-
-
-        // try {
-
+        
+        // while (true) {
         //     $livedata= Http::get('http://122.187.205.206:5008/api/Values/GetAllData?key=steam8108');
-
         //     $input = [
-
         //         'livedata'=>$livedata,
         //         'created_at' => Carbon::now(),
-
         //         'updated_at' => Carbon::now()
         //     ];
+            
+        //     $updatedata=DB::table('livedata')->where('id',1)->update($input);
+        //     sleep(60); 
+        // } 
 
-        //         $updatedata=DB::table('livedata')->where('id',1)->update($input);
+        try {
 
-        // } catch (exception $e) {
-
-        //     return response()->json('error', $e);
-
-        // }
-        while (true) {
-            // Update data here
             $livedata= Http::get('http://122.187.205.206:5008/api/Values/GetAllData?key=steam8108');
-            $input = [
 
+            $input = [
                 'livedata'=>$livedata,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now()
             ];
 
-                $updatedata=DB::table('livedata')->where('id',1)->update($input);
+            $updatedata=DB::table('livedata')->where('id',1)->update($input);
 
-            sleep(60); // wait for 60 seconds before updating again
+            // Log::info($updatedata);
+
+        } catch (Exception $e) {
+            return response()->json('error', $e);
         }
-
-
     }
-
-
-
 }

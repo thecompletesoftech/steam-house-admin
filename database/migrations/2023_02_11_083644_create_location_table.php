@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('location', function (Blueprint $table) {
             $table->increments('location_id');
             $table->string('location');
+            $table->string('contact_no')->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->softDeletes();
         });
     }
 

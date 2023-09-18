@@ -3,29 +3,24 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
 use App\Http\Requests\Admin\ManagerRequest;
-use Illuminate\Support\Facades\DB;
 use App\Models\User;
-use App\Services\ManagerUserService;
-use App\Services\UserService;
 use App\Services\FileService;
 use App\Services\ManagerLanguageService;
+use App\Services\ManagerUserService;
+use App\Services\UserService;
 use App\Services\UtilityService;
-// use App\Services\UserIntrestService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+// use App\Services\UserIntrestService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Log;
-
-
 
 class ManagerRegistrationController extends Controller
 {
     protected $mls, $change_password, $assign_role, $uploads_image_directory;
     protected $index_view, $create_view, $edit_view, $detail_view, $tabe_view, $product_history_view;
     protected $index_route_name, $create_route_name, $detail_route_name, $edit_route_name;
-    protected $bookService, $utilityService, $intrestService;
+    protected $bookService, $utilityService, $intrestService,$user;
 
     public function __construct()
     {
@@ -33,19 +28,18 @@ class ManagerRegistrationController extends Controller
         //Data
         $this->uploads_image_directory = 'files/managerregistrations';
         //route
-        $this->index_route_name  = 'admin.managerregistrations.index';
+        $this->index_route_name = 'admin.managerregistrations.index';
         $this->create_route_name = 'admin.managerregistrations.create';
         $this->detail_route_name = 'admin.managerregistrations.show';
-        $this->edit_route_name   = 'admin.managerregistrations.edit';
+        $this->edit_route_name = 'admin.managerregistrations.edit';
 
         //view files
-        $this->index_view  = 'admin.managerfolder.index';
+        $this->index_view = 'admin.managerfolder.index';
         $this->create_view = 'admin.managerfolder.create';
-        $this->edit_view   = 'admin.managerfolder.edit';
+        $this->edit_view = 'admin.managerfolder.edit';
 
         $this->detail_view = 'admin.managerfolder.details';
-        $this->tabe_view   = 'admin.managerfolder.profile';
-
+        $this->tabe_view = 'admin.managerfolder.profile';
 
         //service files
         $this->user = new ManagerUserService();
@@ -68,17 +62,16 @@ class ManagerRegistrationController extends Controller
 
         if (!empty($request['search'])) {
 
-            $items=UserService::user_search($request);
+            $items = UserService::user_search($request);
 
-            if(count($items)>0){
+            if (count($items) > 0) {
 
-                return view('admin.managerfolder.index',['user'=>$items,'search'=>$request->search]);
+                return view('admin.managerfolder.index', ['user' => $items, 'search' => $request->search]);
             }
-                return redirect()->back()->withSuccess('Search Data Not Found');
+            return redirect()->back()->withSuccess('Search Data Not Found');
         }
-        return view('admin.managerfolder.index',['user'=>$items,'search'=>$request->search]);
+        return view('admin.managerfolder.index', ['user' => $items, 'search' => $request->search]);
     }
-
 
     public function create(Request $request)
     {
@@ -90,99 +83,90 @@ class ManagerRegistrationController extends Controller
 
     }
 
-    public function store(ManagerRequest $request)
+    public function store(Request $request)
     {
 
         $input = $request->except(['_token', 'proengsoft_jsvalidation']);
 
-        if(!empty($input['image'])){
-            $manager_image=$request->file('image');
-            $picture=FileService::fileUploaderWithoutRequest($manager_image,'managerregistrations/image/');
-            $input['image']= $picture;
+        if (!empty($input['image'])) {
+            $manager_image = $request->file('image');
+            $picture = FileService::fileUploaderWithoutRequest($manager_image, 'managerregistrations/image/');
+            $input['image'] = $picture;
 
         }
-        $haspassword=Hash::make($request->password);
-                        $input['password']=$haspassword;
+        $haspassword = Hash::make($request->password);
+        $input['password'] = $haspassword;
+
+        $username = DB::table('users')->where('username', $input['username'])->get();
+
+        if (count($username) > 0) {
+            return redirect()->back()->with('success', 'Username Allready Exist');
+        }
+
+
         $battle = $this->user->create($input);
         return redirect()->route($this->index_route_name)->with('success',
-        $this->mls->messageLanguage('created', 'manager', 1));
+            $this->mls->messageLanguage('created', 'manager', 1));
 
     }
-
 
     public function show(User $user)
     {
-        return view($this->detail_view,compact('user'));
+        return view($this->detail_view, compact('user'));
     }
-
 
     public function edit($id)
     {
 
-
-
-        $manager=User::where('role','1')->where('id',$id)->first();
-       $image=$manager->image;
+        $manager = User::where('role', '1')->where('id', $id)->first();
+        $image = $manager->image;
         $location = DB::table('location')->get();
 
-        return view($this->edit_view,compact('manager','image','location'));
+        return view($this->edit_view, compact('manager', 'image', 'location'));
     }
 
-
-    public function update(Request $request,User $user)
+    public function update(Request $request, User $user)
     {
 
         $input = $request->except(['_method', '_token', 'proengsoft_jsvalidation']);
-
-        if(!empty($input['image']))
-            {
-                $manager_image=$request->file('image');
-                $picture=FileService::fileUploaderWithoutRequest($manager_image,'managerregistrations/image/');
-                $input['image']= $picture;
+        $id = $input['id'];
+        if (!empty($input['image'])) {
+            $manager_image = $request->file('image');
+            $picture = FileService::fileUploaderWithoutRequest($manager_image, 'managerregistrations/image/');
+            $input['image'] = $picture;
         }
-        if(!empty($input['password']))
-        {
 
-    $input['password']=Hash::make($request->password);
-    }
+        $details=User::where('id',$id)->first();
+        if($details->password===$input['password']) {
+            $input['password'] = $details->password;
+            // $input['c_password'] = Hash::make($request->c_password);
+        }else{
+                 $input['password'] = Hash::make($request->password);
+        }
 
-//     if(!empty($input['username']))
-//     {
-
-//         $newuser=User::where('username',$request->username)->get();
-//         if(count($newuser)>0){
-//             return redirect()->back()->with('Username Allready Exists!');
-//         }
-
-// }
-
-
-
-    $this->user->update($input,$user);
-        return redirect()->route($this->index_route_name)->with('success',$this->mls->messageLanguage('updated', 'manager', 1));
+        $this->user->update($input, $user);
+        return redirect()->route($this->index_route_name)->with('success', $this->mls->messageLanguage('updated', 'manager', 1));
 
     }
 
     public function destroy($id)
     {
 
-        $result=UserService::delete_user($id);
+        $result = UserService::delete_user($id);
 
         return redirect()->back()->withSuccess('Data Delete Successfully!');
 
     }
 
+    public function locationdata($id)
+    {
 
-    public function locationdata($id){
-
-        $data=DB::table('users')->select('*','users.id as id')->join('location','location.location_id','=','users.address')->
-        join('service_request','service_request.user_id','=','users.id')->where('users.id',$id)->first();
-        $manager=DB::table('users')->select('name','id')->where('id',$data->manager_id)->first();
+        $data = DB::table('users')->select('*', 'users.id as id')->join('location', 'location.location_id', '=', 'users.address')->
+            join('service_request', 'service_request.user_id', '=', 'users.id')->where('users.id', $id)->first();
+        $manager = DB::table('users')->select('name', 'id')->where('id', $data->manager_id)->first();
         return $manager->name;
 
     }
-
-
 
     // public function livedata(Request $request){
 
@@ -207,12 +191,6 @@ class ManagerRegistrationController extends Controller
 
     //     }
 
-
     // }
-
-
-
-
-
 
 }

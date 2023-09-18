@@ -19,13 +19,12 @@ class UserSeeder extends Seeder
         $data =  [
             'username' => 'Admin',
             'name' => 'Anil',
-            'email' => 'anilv4481@gmail.com',
+            'email' => 'steamhouse@gmail.com',
             'phone' => '7984954227',
             'about' => 'Demo',
-            'c_password' => Hash::make('Anilv4481'),
-            'password' => Hash::make('Anilv4481'),
+            'c_password' => Hash::make('12345678'),
+            'password' => Hash::make('12345678'),
             'role'=>'3',
-
         ];
         User::create($data);
     }

@@ -49,7 +49,7 @@ class AuthController extends Controller
      */
     public function login(ApiLoginRequest $request)
     {
-
+      
         return $this->apiAuthService->login($request);
     }
 

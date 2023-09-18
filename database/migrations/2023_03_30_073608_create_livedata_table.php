@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('livedata', function (Blueprint $table) {
             $table->id();
-            $table->string('livedata');
+            $table->longText('livedata');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->softDeletes();
         });
     }
 
